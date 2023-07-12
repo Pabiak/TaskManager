@@ -12,10 +12,11 @@ const theme = {
   },
   colors: {
     primary: "#2D6ED7",
-    secondary: "#333B48",
+    secondary: "#6454de",
     white: "#FFFFFF",
     black: "#071122",
-    gray: "#b4b7bc",
+    gray: "#333B48",
+    lightGray: "#b4b7bc",
     darkGray: "#333B48"
   },
   fontSizes: {

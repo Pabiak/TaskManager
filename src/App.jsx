@@ -1,19 +1,22 @@
 import React from 'react';
-import styled from 'styled-components';
 import ThemeProvider  from './Theme';
+import List from './components/List/List.component';
+import styled from 'styled-components';
 
-const StyledApp = styled.div`
-    background-color: ${({ theme }) => theme.colors.primary};
-    font-family: ${({ theme }) => theme.fontFamilies.primary};
-    color: ${({ theme }) => theme.colors.white};
-    height: 10rem;
-    width: 10rem;
+const ListBox = styled.div`
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
 `;
 
 const App = () => {
     return (
         <ThemeProvider>
-            <StyledApp> Hello World </StyledApp>
+            <ListBox>
+                <List />
+                <List />
+                <List />
+            </ListBox>
         </ThemeProvider>
     );
 };
