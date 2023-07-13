@@ -8,9 +8,9 @@ import {
     MenuIcon,
     ListTitle,
     AddTaskButton,
-    MenuIconBox
+    MenuIconBox,
 } from './List.styles';
-import { AiOutlinePlus } from "react-icons/ai";
+import { AiOutlinePlus } from 'react-icons/ai';
 
 const List = () => {
     return (
@@ -25,7 +25,10 @@ const List = () => {
                 <Task />
                 <Task />
             </TaskContainer>
-            <AddTaskButton><AiOutlinePlus />Dodaj Zadanie</AddTaskButton>
+            <AddTaskButton>
+                <AiOutlinePlus />
+                Dodaj Zadanie
+            </AddTaskButton>
         </ListContainer>
     );
 };

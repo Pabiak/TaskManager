@@ -1,29 +1,19 @@
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 
 import ThemeProvider  from './Theme';
-import List from './components/List/List.component';
-import styled from 'styled-components';
-import NavBar from './components/NavBar/NavBar.component';
 import GlobalStyle from './GlobalStyles';
-
-const ListBox = styled.div`
-    display: flex;
-    flex-direction: row;
-    margin: 1rem;
-    gap: 1rem;
-    flex-wrap: wrap;
-`;
+import HomePage from './pages/homePage/homePage';
+import LoginPage from './pages/loginPage/loginPage';
 
 const App = () => {
     return (
         <ThemeProvider>
             <GlobalStyle />
-            <NavBar />
-            <ListBox>
-                <List />
-                <List />
-                <List />
-            </ListBox>
+             <Routes>
+              <Route exact path="/" element={<HomePage />} />
+              <Route path="/login" element={<LoginPage />} />
+            </Routes>
         </ThemeProvider>
     );
 };

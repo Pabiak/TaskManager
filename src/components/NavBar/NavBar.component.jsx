@@ -2,6 +2,7 @@ import React from 'react';
 import ReactCountryFlag from 'react-country-flag';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { MdOutlineLogout } from 'react-icons/md';
+import { Link } from 'react-router-dom';
 
 import {
     NavBarContainer,
@@ -31,6 +32,11 @@ const NavBar = () => {
                 </AddListButton>
             </LeftContainer>
             <RightContainer>
+                 <Link to="/login">
+                    <AddListButton>
+                        Login Page
+                    </AddListButton>
+                </Link>
                 <NightModeIcon />
                 <FlagContainer> 
                     <ReactCountryFlag countryCode='PL' svg />
