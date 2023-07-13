@@ -14,8 +14,8 @@ export const NavBarContainer = styled.div`
 `;
 
 export const UserAvatar = styled.div`
-    width: 2rem;
-    height: 2rem;
+    width: 3rem;
+    height: 3rem;
     border-radius: 50%;
     background-color: ${({ theme }) => theme.colors.lightGray};
 `;
@@ -38,6 +38,7 @@ export const UserName = styled.span`
 export const AddListButton = styled(AddTaskButton)`
     background-color: ${({ theme }) => theme.colors.secondary};
     margin: 0;
+    align-self: center;
 `;
 
 export const LogOut = styled.div`

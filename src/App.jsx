@@ -1,4 +1,5 @@
 import React from 'react';
+
 import ThemeProvider  from './Theme';
 import List from './components/List/List.component';
 import styled from 'styled-components';
@@ -10,6 +11,7 @@ const ListBox = styled.div`
     flex-direction: row;
     margin: 1rem;
     gap: 1rem;
+    flex-wrap: wrap;
 `;
 
 const App = () => {
