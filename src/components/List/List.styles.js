@@ -67,6 +67,7 @@ export const AddTaskButton = styled.button`
     border-radius: 12px;
     margin-top: 1rem;
     align-self: flex-start;
+    min-width: 7rem;
     transition: all .2s ease-in-out;
 
     &:hover {
