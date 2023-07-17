@@ -42,11 +42,6 @@ const NavBar = () => {
                 </AddListButton>
             </LeftContainer>
             <RightContainer>
-                 <Link to="/login">
-                    <AddListButton>
-                        Login Page
-                    </AddListButton>
-                </Link>
                 <NightModeIcon />
                 <FlagContainer> 
                     <ReactCountryFlag countryCode='PL' svg />

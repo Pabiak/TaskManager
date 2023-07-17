@@ -17,13 +17,11 @@ export const SpinnerContainer = styled.div`
 `;
 
 export const LoadingSpinner = styled.div`
-    width: ${(props) => (props.small ? '20px' : '100px')};
-    height: ${(props) => (props.small ? '20px' : '100px')};
-    border: ${(props) =>
-        props.small ? '1px solid #f3f3f3' : '10px solid #f3f3f3'};
-    border-top: ${(props) =>
-        props.small ? '3px solid #c0392b' : '10px solid #c0392b'};
-    border-radius: 50%;
-    animation: ${spin} 1.5s linear infinite;
-    margin-left: ${(props) => (props.small ? '4px' : '0')};
+  width: ${(props) => (props.small ? '20px' : '100px')};
+  height: ${(props) => (props.small ? '20px' : '100px')};
+  border: ${(props) => props.small ? `1px solid ${props.theme.colors.primary}` : `10px solid ${props.theme.colors.primary}`};
+  border-top: ${(props) => props.small ? `3px solid ${props.theme.colors.white}` : `10px solid ${props.theme.colors.white}`};
+  border-radius: 50%;
+  animation: ${spin} 1.5s linear infinite;
+  margin-left: ${(props) => (props.small ? '4px' : '0')};
 `;
