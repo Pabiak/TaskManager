@@ -11,14 +11,50 @@ const ListBox = styled.div`
     flex-wrap: wrap;
 `;
 
+const Lists = [
+    {
+      id: 1,
+      title: 'Lista 1',
+      tasks: [
+        {
+          id: 1,
+          title: 'Zadanie 1',
+        },
+        {
+          id: 2,
+          title: 'Zadanie 2',
+        },
+        {
+          id: 3,
+          title: 'Zadanie 3',
+        },
+      ],
+    },
+    {
+      id: 2,
+      title: 'Lista 2',
+      tasks: [
+        {
+          id: 1,
+          title: 'Zadanie 1',
+        },
+        {
+          id: 2,
+          title: 'Zadanie 2',
+        },
+      ],
+    },
+  ];
+  
+
 const HomePage = () => {
     return (
         <>
             <NavBar />
             <ListBox>
-                <List />
-                <List />
-                <List />
+                {Lists.map((list) => (
+                    <List key={list.id} title={list.title} tasks={list.tasks} />
+                ))}
             </ListBox>
         </>
     );

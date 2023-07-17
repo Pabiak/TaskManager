@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import Task from '../Task/Task.component';
 import {
@@ -12,18 +12,20 @@ import {
 } from './List.styles';
 import { AiOutlinePlus } from 'react-icons/ai';
 
-const List = () => {
+const List = ({ id, title, tasks }) => {
+
     return (
         <ListContainer>
             <ListUpperBar>
-                <ListTitle>Lista</ListTitle>
+                <ListTitle>{title}</ListTitle>
                 <MenuIconBox>
                     <MenuIcon />
                 </MenuIconBox>
             </ListUpperBar>
             <TaskContainer>
-                <Task />
-                <Task />
+                {tasks.map((task) => (
+                    <Task key={task.id} title={task.title} />
+                ))}
             </TaskContainer>
             <AddTaskButton>
                 <AiOutlinePlus />

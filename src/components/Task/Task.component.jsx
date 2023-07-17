@@ -1,10 +1,10 @@
 import React from 'react';
 import { TaskTitle, TaskContainer, MenuIcon } from './Task.styles';
 
-const Task = () => {
+const Task = ({ title }) => {
     return (
         <TaskContainer>  
-            <TaskTitle>Task Title</TaskTitle>
+            <TaskTitle>{title}</TaskTitle>
             <MenuIcon />
         </TaskContainer>
     );

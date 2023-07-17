@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { UserAuth } from '../../context/AuthContext';
 
 import {
     LoginContainer,
@@ -6,23 +8,37 @@ import {
     LoginText,
     LoginButton,
     LoginBox,
-    Svg
+    Svg,
 } from './loginPage.styles';
 
 const LoginPage = () => {
+    const { signInWithGoogle, user } = UserAuth();
+    const navigate = useNavigate();
+    const hangleGoogleLogin = async () => {
+        try{
+            await signInWithGoogle();
+
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        if(user != null) {
+            // navigate('/');
+            window.location.href = '/'
+        }
+    }, [ user ]);
+
     return (
         <LoginContainer>
             <LoginBox>
-                <LoginText>
-                    Zaloguj się
-                </LoginText>
+                <LoginText>Zaloguj się</LoginText>
                 <ButtonContainer>
-                    <LoginButton>
-                        Zaloguj się przez Facebook
-                    </LoginButton>
-                    <LoginButton>
-                        Zaloguj się przez Google
-                    </LoginButton>
+                    <LoginButton onClick={hangleGoogleLogin}>Zaloguj się przez Google</LoginButton>
+                    <Link to='/'>
+                        <button>HomePage</button>
+                    </Link>
                 </ButtonContainer>
             </LoginBox>
             <Svg />
