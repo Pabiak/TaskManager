@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { SpinnerContainer, LoadingSpinner } from './Spinner.styles';
 
@@ -9,3 +10,11 @@ const Spinner = ({ small }) => (
 );
 
 export default Spinner;
+
+Spinner.propTypes = {
+  small: PropTypes.bool,
+};
+
+Spinner.defaultProps = {
+  small: false,
+};

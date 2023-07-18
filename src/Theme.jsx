@@ -11,13 +11,13 @@ const theme = {
     xl: '1400px',
   },
   colors: {
-    primary: "#2D6ED7",
-    secondary: "#6454de",
-    white: "#FFFFFF",
-    black: "#071122",
-    gray: "#333B48",
-    lightGray: "#b4b7bc",
-    darkGray: "#333B48"
+    primary: '#2D6ED7',
+    secondary: '#6454de',
+    white: '#FFFFFF',
+    black: '#071122',
+    gray: '#333B48',
+    lightGray: '#b4b7bc',
+    darkGray: '#333B48',
   },
   fontSizes: {
     sm: '0.875rem', // 14px
@@ -34,8 +34,8 @@ const theme = {
     bold: 700,
   },
   fontFamilies: {
-    primary : "'Roboto', sans-serif",
-  }
+    primary: "'Roboto', sans-serif",
+  },
 };
 
 const Theme = ({ children }) => (
@@ -45,7 +45,8 @@ const Theme = ({ children }) => (
 );
 
 Theme.propTypes = {
-  children: PropTypes.any.isRequired
+  // eslint-disable-next-line react/forbid-prop-types
+  children: PropTypes.any.isRequired,
 };
 
 export default Theme;

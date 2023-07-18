@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { ReactComponent as LoginBackground } from '../../assets/svg/loginPageBackground.svg';
-import { AddListButton } from '../../components/NavBar/NavBar.styles';
 
 export const Svg = styled(LoginBackground)`
     position: absolute;
@@ -56,10 +55,4 @@ export const ButtonContainer = styled.div`
     width: 100%;
     height: fit-content;
     gap: 1rem;
-`;
-
-// TODO: Change to GoogleButton
-export const LoginButton = styled(AddListButton)`
-    width: 100%;
-    height: 3rem;
 `;
