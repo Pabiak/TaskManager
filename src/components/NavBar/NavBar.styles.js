@@ -1,6 +1,6 @@
 import styled from 'styled-components';
-import { AddTaskButton } from '../List/List.styles';
 import { BsFillMoonFill } from 'react-icons/bs';
+import { AddTaskButton } from '../List/List.styles';
 
 export const NavBarContainer = styled.div`
     display: flex;
@@ -17,7 +17,7 @@ export const UserAvatar = styled.div`
     width: 3rem;
     height: 3rem;
     border-radius: 50%;
-    background-image: url(${props => props.photoURL});
+    background-image: url(${(props) => props.photoURL});
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

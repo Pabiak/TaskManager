@@ -1,48 +1,43 @@
-import React, { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { UserAuth } from '../../context/AuthContext';
+import React from 'react';
 import {
-    GoogleLoginButton,
-    GithubLoginButton,
-    AppleLoginButton,
-    MetamaskLoginButton
+  GoogleLoginButton,
+  GithubLoginButton,
 } from 'react-social-login-buttons';
+import { UserAuth } from '../../context/AuthContext';
 
 import {
-    LoginContainer,
-    ButtonContainer,
-    LoginText,
-    LoginButton,
-    LoginBox,
-    Svg,
+  LoginContainer,
+  ButtonContainer,
+  LoginText,
+  LoginBox,
+  Svg,
 } from './loginPage.styles';
 
 const LoginPage = () => {
-    const { signInWithGoogle, user } = UserAuth();
-    const navigate = useNavigate();
-    const hangleGoogleLogin = async () => {
-        try {
-            await signInWithGoogle();
-        } catch (error) {
-            console.log(error);
-        }
-    };
+  const { signInWithGoogle } = UserAuth();
+  const hangleGoogleLogin = async () => {
+    try {
+      await signInWithGoogle();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    return (
-        <LoginContainer>
-            <LoginBox>
-                <LoginText>Zaloguj się</LoginText>
-                <ButtonContainer>
-                    <GoogleLoginButton onClick={hangleGoogleLogin}>
-                        <span>Zaloguj się przez Google</span>
-                    </GoogleLoginButton>
-                    <GithubLoginButton onClick={hangleGoogleLogin}>
-                        <span>Zaloguj się przez GitHub</span>
-                    </GithubLoginButton>
-                </ButtonContainer>
-            </LoginBox>
-            <Svg />
-        </LoginContainer>
-    );
+  return (
+    <LoginContainer>
+      <LoginBox>
+        <LoginText>Zaloguj się</LoginText>
+        <ButtonContainer>
+          <GoogleLoginButton onClick={hangleGoogleLogin}>
+            <span>Zaloguj się przez Google</span>
+          </GoogleLoginButton>
+          <GithubLoginButton onClick={hangleGoogleLogin}>
+            <span>Zaloguj się przez GitHub</span>
+          </GithubLoginButton>
+        </ButtonContainer>
+      </LoginBox>
+      <Svg />
+    </LoginContainer>
+  );
 };
 export default LoginPage;

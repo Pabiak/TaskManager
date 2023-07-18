@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { BsThreeDots } from "react-icons/bs";
+import styled from 'styled-components';
+import { BsThreeDots } from 'react-icons/bs';
 
 export const ListContainer = styled.div`
     display: flex;

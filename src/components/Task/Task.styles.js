@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { BsThreeDots } from "react-icons/bs";
+import styled from 'styled-components';
+import { BsThreeDots } from 'react-icons/bs';
 
 export const TaskContainer = styled.div`
     display: flex;
@@ -34,4 +34,3 @@ export const MenuIcon = styled(BsThreeDots)`
     color: ${({ theme }) => theme.colors.lightGray};
     cursor: pointer;
 `;
-
