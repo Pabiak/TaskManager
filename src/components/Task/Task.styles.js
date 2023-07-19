@@ -1,6 +1,16 @@
 import styled from 'styled-components';
 import { BsThreeDots } from 'react-icons/bs';
 
+const addAlphaChannel = (color, alpha) => {
+  const rgb = color
+    .replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i, (m, r, g, b) => `#${r}${r}${g}${g}${b}${b}`)
+    .substring(1)
+    .match(/.{2}/g)
+    .map((x) => parseInt(x, 16));
+
+  return `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${alpha})`;
+};
+
 export const TaskContainer = styled.div`
     display: flex;
     flex-direction: row;
@@ -11,6 +21,10 @@ export const TaskContainer = styled.div`
     padding: 16px;
     border-radius: 12px;
     background-color: ${({ theme }) => theme.colors.gray};
+    cursor: pointer;
+    &:hover {
+        background-color: ${({ theme }) => addAlphaChannel(theme.colors.gray, 0.7)};
+    }
 `;
 
 export const TaskTitle = styled.span`
