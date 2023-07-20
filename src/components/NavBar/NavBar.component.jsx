@@ -19,7 +19,7 @@ import {
   NightModeIcon,
 } from './NavBar.styles';
 
-const NavBar = () => {
+const NavBar = ({ addList }) => {
   const { user, logOut } = UserAuth();
   const handleLogOut = async () => {
     try {
@@ -37,7 +37,7 @@ const NavBar = () => {
           <UserAvatar photoURL={user?.photoURL} />
           <UserName>{user?.displayName}</UserName>
         </UserInfo>
-        <AddListButton>
+        <AddListButton onClick={addList}>
           <AiOutlinePlus />
           Dodaj Listę
         </AddListButton>
@@ -64,8 +64,10 @@ NavBar.propTypes = {
     displayName: PropTypes.string,
     photoURL: PropTypes.string,
   }),
+  addList: PropTypes.func,
 };
 
 NavBar.defaultProps = {
   user: {},
+  addList: null,
 };
