@@ -8,51 +8,9 @@ import { database } from '../../firebase';
 import { UserAuth } from '../../context/AuthContext';
 import ListBox from './homePage.styles';
 
-// const lists = [
-//   {
-//     id: 1,
-//     title: 'Lista 3',
-//     tasks: [
-//       {
-//         id: 1,
-//         title: 'Zadanie 1',
-//       },
-//       {
-//         id: 2,
-//         title: 'Zadanie 2',
-//       },
-//       {
-//         id: 3,
-//         title: 'Zadanie 3',
-//       },
-//     ],
-//   },
-//   {
-//     id: 2,
-//     title: 'Lista 4',
-//     tasks: [
-//       {
-//         id: 1,
-//         title: 'Zadanie 1',
-//       },
-//       {
-//         id: 2,
-//         title: 'Zadanie 2',
-//       },
-//     ],
-//   },
-// ];
-
 const HomePage = () => {
   const [ listsFromDB, setListsFromDB ] = useState([]);
   const { user } = UserAuth();
-
-  // const updateTasks = async () => {
-  //   const listCollection = collection(database, `lists-${user?.uid}`);
-  //   lists.forEach(async (list) => {
-  //     await addDoc(listCollection, list);
-  //   });
-  // };
 
   const getTasks = async () => {
     const dbQuery = query(collection(database, `lists-${user?.uid}`));
