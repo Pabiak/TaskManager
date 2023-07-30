@@ -1,12 +1,14 @@
 import styled from 'styled-components';
-import { BsThreeDots } from 'react-icons/bs';
+import { BsPencilFill, BsFillTrashFill } from 'react-icons/bs';
+import { Input } from 'reactstrap';
+import { AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 
 export const ListContainer = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-    width: fit-content;
+    width: 16rem;
     height: fit-content;
     padding: 1rem;
     border-radius: 12px;
@@ -17,24 +19,20 @@ export const ListTitle = styled.span`
     font-weight: ${({ theme }) => theme.fontWeights.bold};
     color: ${({ theme }) => theme.colors.lightGray};
     font-family: ${({ theme }) => theme.fontFamilies.primary};
-    padding-left: .5rem;
+    padding-left: 0.5rem;
+    width: 75%;
+    word-wrap: break-word;
 `;
 
 export const ListUpperBar = styled.div`
     display: flex;
     width: 100%;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     margin-bottom: 1rem;
 `;
 
-export const MenuIcon = styled(BsThreeDots)`
-    font-size: ${({ theme }) => theme.fontSizes.lg};
-    color: ${({ theme }) => theme.colors.lightGray};
-    cursor: pointer;
-`;
-
-export const MenuIconBox = styled.div`
+export const MenuIconsBox = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -42,6 +40,7 @@ export const MenuIconBox = styled.div`
     height: fit-content;
     padding: 0.3rem;
     border-radius: 2px;
+    gap: 1rem;
 `;
 
 export const TaskContainer = styled.div`
@@ -63,14 +62,59 @@ export const AddTaskButton = styled.button`
     font-weight: ${({ theme }) => theme.fontWeights.light};
     cursor: pointer;
     background-color: ${({ theme }) => theme.colors.primary};
-    padding: .5rem 1rem .5rem 0.5rem;
+    padding: 0.5rem 1rem 0.5rem 0.5rem;
     border-radius: 12px;
     margin-top: 1rem;
     align-self: flex-start;
     min-width: 7rem;
-    transition: all .2s ease-in-out;
+    transition: all 0.2s ease-in-out;
 
     &:hover {
         background-color: ${({ theme }) => theme.colors.secondary};
     }
 `;
+
+export const EditListField = styled(Input)`
+    width: 170px;
+    background-color: transparent;
+    color: white;
+    height: fit-content;
+    resize: none;
+    padding: 0 0 0 0.5rem;
+    overflow: hidden;
+    &:focus {
+        background-color: transparent;
+        color: white;
+    }
+
+`;
+
+export const EditIconsBox = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 0.5rem;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+`;
+
+export const ConfirmIcon = styled(AiOutlineCheck)`
+    color: green;
+    cursor: pointer;
+`;
+
+export const CancelIcon = styled(AiOutlineClose)`
+    margin-left: 0.8rem;
+    color: red;
+    cursor: pointer;
+`;
+
+export const IconBase = styled.div`
+    font-size: ${({ theme }) => theme.fontSizes.lg};
+    color: ${({ theme }) => theme.colors.lightGray};
+    cursor: pointer;
+`;
+
+export const DeleteIcon = styled(IconBase).attrs({ as: BsFillTrashFill })``;
+export const EditIcon = styled(IconBase).attrs({ as: BsPencilFill })`
+font-size: ${({ theme }) => theme.fontSizes.md};`;

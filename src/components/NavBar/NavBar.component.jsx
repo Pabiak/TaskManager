@@ -1,9 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { collection, addDoc } from 'firebase/firestore';
 import ReactCountryFlag from 'react-country-flag';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { MdOutlineLogout } from 'react-icons/md';
+import { database } from '../../firebase';
 import { UserAuth } from '../../context/AuthContext';
 import {
   NavBarContainer,
@@ -19,7 +21,7 @@ import {
   NightModeIcon,
 } from './NavBar.styles';
 
-const NavBar = ({ addList }) => {
+const NavBar = () => {
   const { user, logOut } = UserAuth();
   const handleLogOut = async () => {
     try {
@@ -27,6 +29,14 @@ const NavBar = ({ addList }) => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const addList = () => {
+    const listCollection = collection(database, `lists-${user?.uid}`);
+    addDoc(listCollection, {
+      title: 'Lista',
+      tasks: [],
+    });
   };
 
   return (
@@ -64,10 +74,8 @@ NavBar.propTypes = {
     displayName: PropTypes.string,
     photoURL: PropTypes.string,
   }),
-  addList: PropTypes.func,
 };
 
 NavBar.defaultProps = {
   user: {},
-  addList: null,
 };
