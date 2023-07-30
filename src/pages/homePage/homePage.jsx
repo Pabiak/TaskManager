@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  addDoc, collection, onSnapshot, query, updateDoc, doc, arrayUnion,
+  collection, onSnapshot, query,
 } from 'firebase/firestore';
 import NavBar from '../../components/NavBar/NavBar.component';
 import List from '../../components/List/List.component';
@@ -26,28 +26,17 @@ const HomePage = () => {
     getTasks();
   }, []);
 
-  const addList = () => {
-    const listCollection = collection(database, `lists-${user?.uid}`);
-    addDoc(listCollection, {
-      title: 'Lista',
-      tasks: [],
-    });
-  };
-
-  const addTaskToList = async (listId, newTask) => {
-    const listDoc = doc(database, `lists-${user?.uid}`, listId);
-
-    await updateDoc(listDoc, {
-      tasks: arrayUnion(newTask),
-    });
-  };
-
   return (
     <>
-      <NavBar addList={addList} />
+      <NavBar />
       <ListBox>
         {listsFromDB.map((list) => (
-          <List key={list.id} id={list.id} title={list.title} tasks={list.tasks} addTaskToList={addTaskToList} />
+          <List
+            key={list.id}
+            id={list.id}
+            title={list.title}
+            tasks={list.tasks}
+          />
         ))}
       </ListBox>
     </>

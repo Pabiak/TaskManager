@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { BsThreeDots } from 'react-icons/bs';
+import { EditListField } from '../List/List.styles';
 
 const addAlphaChannel = (color, alpha) => {
   const rgb = color
@@ -16,11 +17,12 @@ export const TaskContainer = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    width: 12rem;
+    width: 14rem;
     height: fit-content;
     padding: 16px;
     border-radius: 12px;
     background-color: ${({ theme }) => theme.colors.gray};
+    flex-shrink: 0;
     cursor: pointer;
     &:hover {
         background-color: ${({ theme }) => addAlphaChannel(theme.colors.gray, 0.7)};
@@ -47,4 +49,9 @@ export const MenuIcon = styled(BsThreeDots)`
     font-size: ${({ theme }) => theme.fontSizes.md};
     color: ${({ theme }) => theme.colors.lightGray};
     cursor: pointer;
+    flex-shrink: 0;
+`;
+
+export const EditTaskField = styled(EditListField)`
+    width: 9.5rem;
 `;

@@ -8,6 +8,8 @@ import HomePage from './pages/homePage/homePage';
 import LoginPage from './pages/loginPage/loginPage';
 import Spinner from './components/Spinner/Spinner.component';
 
+import 'bootstrap/dist/css/bootstrap.min.css'; // !Needed for reactstrap
+
 const App = () => (
   <AuthContextProvider>
     <AppContent />
