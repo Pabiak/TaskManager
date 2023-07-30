@@ -21,7 +21,9 @@ export const ListTitle = styled.span`
     font-family: ${({ theme }) => theme.fontFamilies.primary};
     padding-left: 0.5rem;
     width: 75%;
-    word-wrap: break-word;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `;
 
 export const ListUpperBar = styled.div`
