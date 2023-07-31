@@ -5,8 +5,9 @@ import { doc, updateDoc, getDoc } from 'firebase/firestore';
 import { UserAuth } from '../../context/AuthContext';
 import { database } from '../../firebase';
 
-import { TaskTitle, TaskContainer, MenuIcon, EditTaskField } from './Task.styles';
+import { TaskTitle, TaskContainer, EditTaskField } from './Task.styles';
 import { EditIconsBox, ConfirmIcon, CancelIcon } from '../List/List.styles';
+import PopupMenu from '../popupMenu/PopupMenu.component';
 
 const Task = ({
   id, listId, title, removeTaskFromList,
@@ -20,6 +21,10 @@ const Task = ({
   const handleTitleChange = (e) => {
     editRef.current = true;
     setNewTitle(e.target.value);
+  };
+
+  const handleEditClicked = () => {
+    setEditClicked(!editClicked);
   };
 
   const handleCancel = () => {
@@ -84,10 +89,7 @@ const Task = ({
           />
         </EditIconsBox>
       ) : (
-        <>
-          {/* <MenuIcon onClick={handleRemoveTask} /> */}
-          <MenuIcon onClick={() => setEditClicked(!editClicked)} />
-        </>
+        <PopupMenu onEditClick={handleEditClicked} onDeleteClick={handleRemoveTask} />
       )}
 
     </TaskContainer>
@@ -96,14 +98,14 @@ const Task = ({
 export default Task;
 
 Task.propTypes = {
-  id: PropTypes.number,
+  id: PropTypes.string,
   listId: PropTypes.string,
   title: PropTypes.string,
   removeTaskFromList: PropTypes.func,
 };
 
 Task.defaultProps = {
-  id: -1,
+  id: '',
   listId: '',
   title: '',
   removeTaskFromList: () => {},
