@@ -21,7 +21,6 @@ export const ListTitle = styled.span`
     font-family: ${({ theme }) => theme.fontFamilies.primary};
     padding-left: 0.5rem;
     width: 75%;
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 `;
@@ -88,7 +87,6 @@ export const EditListField = styled(Input)`
         background-color: transparent;
         color: white;
     }
-
 `;
 
 export const EditIconsBox = styled.div`
@@ -117,6 +115,14 @@ export const IconBase = styled.div`
     cursor: pointer;
 `;
 
-export const DeleteIcon = styled(IconBase).attrs({ as: BsFillTrashFill })``;
+export const DeleteIcon = styled(IconBase).attrs({ as: BsFillTrashFill })`
+    &:hover {
+        color: ${({ theme }) => theme.colors.white};
+    }
+`;
 export const EditIcon = styled(IconBase).attrs({ as: BsPencilFill })`
-font-size: ${({ theme }) => theme.fontSizes.md};`;
+    font-size: ${({ theme }) => theme.fontSizes.md};
+    &:hover {
+        color: white;
+    }
+`;

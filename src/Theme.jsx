@@ -15,6 +15,8 @@ const theme = {
     secondary: '#6454de',
     white: '#FFFFFF',
     black: '#071122',
+    red: '#e33030',
+    hoverGray: '#52575c',
     gray: '#333B48',
     lightGray: '#b4b7bc',
     darkGray: '#333B48',

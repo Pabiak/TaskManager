@@ -20,7 +20,7 @@ import {
   EditIconsBox,
   CancelIcon,
   ConfirmIcon,
-  EditIcon
+  EditIcon,
 } from './List.styles';
 
 const List = ({
@@ -34,7 +34,7 @@ const List = ({
     const listDoc = doc(database, `lists-${user?.uid}`, id);
 
     const newTask = {
-      id: tasks.length + 1,
+      id: crypto.randomUUID(),
       title: 'Nowe zadanie',
     };
 
@@ -130,7 +130,7 @@ List.propTypes = {
   title: PropTypes.string,
   tasks: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number,
+      id: PropTypes.string,
       title: PropTypes.string,
     }),
   ),
