@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import {
   Dropdown,
+  Tooltip,
 } from 'reactstrap';
 
 import { BiSolidLabel } from 'react-icons/bi';
@@ -10,16 +11,21 @@ import {
   PopupMenuContainer, StyledDropdownItem, StyledDropdownMenu, StyledDropdownToggle,
 } from './popupMenu.styles';
 
-const PopupMenu = ({ onEditClick, onDeleteClick }) => {
+const PopupMenu = ({ id, onEditClick, onDeleteClick }) => {
   const [ dropdownOpen, setDropdownOpen ] = useState(false);
+  const [ menuTooltipOpen, setMenuTooltipOpen ] = useState(false);
 
-  const toggle = () => setDropdownOpen((prev) => !prev);
-
+  const toggleDropdown = () => setDropdownOpen((prev) => {
+    if (prev) setMenuTooltipOpen(false);
+    return !prev;
+  });
+  const toggleMenuTooltip = () => setMenuTooltipOpen(!menuTooltipOpen);
   return (
     <PopupMenuContainer>
-      <Dropdown isOpen={dropdownOpen} toggle={toggle} direction="end">
+      <Dropdown isOpen={dropdownOpen} toggle={toggleDropdown} direction="end">
         <StyledDropdownToggle>
-          <BsThreeDots />
+          {/* zindex needed to prevent tooltip flickering */}
+          <BsThreeDots id={id} style={{ zIndex: '2000' }} />
         </StyledDropdownToggle>
         <StyledDropdownMenu>
           <StyledDropdownItem disabled>
@@ -36,6 +42,7 @@ const PopupMenu = ({ onEditClick, onDeleteClick }) => {
           </StyledDropdownItem>
         </StyledDropdownMenu>
       </Dropdown>
+      {dropdownOpen || <Tooltip isOpen={menuTooltipOpen} target={id} toggle={toggleMenuTooltip} placement="top">Otwórz menu</Tooltip>}
     </PopupMenuContainer>
   );
 };
@@ -45,9 +52,11 @@ export default PopupMenu;
 PopupMenu.propTypes = {
   onEditClick: PropTypes.func,
   onDeleteClick: PropTypes.func,
+  id: PropTypes.string,
 };
 
 PopupMenu.defaultProps = {
   onEditClick: () => {},
   onDeleteClick: () => {},
+  id: '',
 };
