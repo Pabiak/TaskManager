@@ -7,7 +7,7 @@ import { database } from '../../firebase';
 
 import { TaskTitle, TaskContainer, EditTaskField } from './Task.styles';
 import { EditIconsBox, ConfirmIcon, CancelIcon } from '../List/List.styles';
-import PopupMenu from '../popupMenu/PopupMenu.component';
+import PopupMenu from '../PopupMenu/PopupMenu.component';
 
 const Task = ({
   id, listId, title, removeTaskFromList,
