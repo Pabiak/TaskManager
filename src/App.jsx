@@ -1,12 +1,12 @@
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import { AuthContextProvider, UserAuth } from './context/AuthContext';
+import { AuthContextProvider, UserAuth } from './context/authContext';
 
-import ThemeProvider from './Theme';
-import GlobalStyle from './GlobalStyles';
+import ThemeProvider from './theme';
+import GlobalStyle from './globalStyles';
 import HomePage from './pages/homePage/homePage';
 import LoginPage from './pages/loginPage/loginPage';
-import Spinner from './components/Spinner/Spinner.component';
+import Spinner from './components/Spinner/spinner.component';
 
 import 'bootstrap/dist/css/bootstrap.min.css'; // !Needed for reactstrap
 

@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { BsFillMoonFill } from 'react-icons/bs';
-import { AddTaskButton } from '../List/List.styles';
+import { AddTaskButton } from '../List/list.styles';
 
 export const NavBarContainer = styled.div`
     display: flex;

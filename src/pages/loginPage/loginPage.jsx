@@ -3,7 +3,7 @@ import {
   GoogleLoginButton,
   GithubLoginButton,
 } from 'react-social-login-buttons';
-import { UserAuth } from '../../context/AuthContext';
+import { UserAuth } from '../../context/authContext';
 
 import {
   LoginContainer,

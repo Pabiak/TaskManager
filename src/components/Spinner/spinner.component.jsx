@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { SpinnerContainer, LoadingSpinner } from './Spinner.styles';
+import { SpinnerContainer, LoadingSpinner } from './spinner.styles';
 
 const Spinner = ({ small }) => (
   <SpinnerContainer small={small}>

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { Navigate } from 'react-router-dom';
-import { UserAuth } from '../../context/AuthContext';
+import { UserAuth } from '../../context/authContext';
 
 const PrivateRoute = ({ children }) => {
   const { user, loading } = UserAuth();

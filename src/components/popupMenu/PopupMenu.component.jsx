@@ -8,7 +8,7 @@ import { BiSolidLabel } from 'react-icons/bi';
 import { BsThreeDots, BsPencilFill, BsFillTrashFill } from 'react-icons/bs';
 import {
   PopupMenuContainer, StyledDropdownItem, StyledDropdownMenu, StyledDropdownToggle,
-} from './PopupMenu.styles';
+} from './popupMenu.styles';
 
 const PopupMenu = ({ onEditClick, onDeleteClick }) => {
   const [ dropdownOpen, setDropdownOpen ] = useState(false);

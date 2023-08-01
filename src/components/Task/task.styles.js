@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { BsThreeDots } from 'react-icons/bs';
-import { EditListField } from '../List/List.styles';
+import { EditListField } from '../List/list.styles';
 
 const addAlphaChannel = (color, alpha) => {
   const rgb = color

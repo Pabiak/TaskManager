@@ -3,10 +3,10 @@ import {
   collection, onSnapshot, query,
 } from 'firebase/firestore';
 import { Spinner } from 'reactstrap';
-import NavBar from '../../components/NavBar/NavBar.component';
-import List from '../../components/List/List.component';
+import NavBar from '../../components/NavBar/navBar.component';
+import List from '../../components/List/list.component';
 import { database } from '../../firebase';
-import { UserAuth } from '../../context/AuthContext';
+import { UserAuth } from '../../context/authContext';
 import ListBox from './homePage.styles';
 
 const HomePage = () => {

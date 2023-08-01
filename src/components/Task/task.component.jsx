@@ -2,12 +2,12 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { doc, updateDoc, getDoc } from 'firebase/firestore';
-import { UserAuth } from '../../context/AuthContext';
+import { UserAuth } from '../../context/authContext';
 import { database } from '../../firebase';
 
-import { TaskTitle, TaskContainer, EditTaskField } from './Task.styles';
-import { EditIconsBox, ConfirmIcon, CancelIcon } from '../List/List.styles';
-import PopupMenu from '../PopupMenu/PopupMenu.component';
+import { TaskTitle, TaskContainer, EditTaskField } from './task.styles';
+import { EditIconsBox, ConfirmIcon, CancelIcon } from '../List/list.styles';
+import PopupMenu from '../PopupMenu/popupMenu.component';
 
 const Task = ({
   id, listId, title, removeTaskFromList,
