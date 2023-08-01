@@ -7,6 +7,7 @@ import {
 } from 'firebase/firestore';
 import { database } from '../../firebase';
 import { UserAuth } from '../../context/authContext';
+import { Tooltip } from 'reactstrap';
 import Task from '../Task/task.component';
 import {
   ListContainer,
@@ -21,14 +22,20 @@ import {
   CancelIcon,
   ConfirmIcon,
   EditIcon,
-} from './list.styles.js';
+} from './list.styles';
 import ConfirmDeleteModal from '../ConfirmDeleteModal/confirmDeleteModal.component';
+import { useEffect } from 'react';
 
 const List = ({
   id, title, tasks,
 }) => {
   const [ editClicked, setEditClicked ] = useState(false);
   const [ newTitle, setNewTitle ] = useState(title);
+  const [ isConfirmTooltipOpen, setIsConfirmTooltipOpen ] = useState(false);
+  const [ isCancelTooltipOpen, setIsCancelTooltipOpen ] = useState(false);
+  const [ isEditTooltipOpen, setIsEditTooltipOpen ] = useState(false);
+  const [ isDeleteTooltipOpen, setIsDeleteTooltipOpen ] = useState(false);
+  const [ isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen ] = useState(false);
   const { user } = UserAuth();
 
   const addTaskToList = async () => {
@@ -63,20 +70,29 @@ const List = ({
 
   const handleCancel = () => {
     setEditClicked(false);
+    setIsCancelTooltipOpen(false);
+    setIsDeleteTooltipOpen(false);
+    setIsEditTooltipOpen(false);
     setNewTitle(title);
   };
 
   const handleConfirm = async () => {
     setEditClicked(false);
+    setIsConfirmTooltipOpen(false);
+    setIsDeleteTooltipOpen(false);
+    setIsEditTooltipOpen(false);
     const listDoc = doc(database, `lists-${user?.uid}`, id);
     await updateDoc(listDoc, {
       title: newTitle,
     });
   };
 
-  const [ isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen ] = useState(false);
-
   const toggleConfirmDeleteModal = () => setIsConfirmDeleteModalOpen(!isConfirmDeleteModalOpen);
+
+  const toggleConfirmTooltip = () => setIsConfirmTooltipOpen(!isConfirmTooltipOpen);
+  const toggleCancelTooltip = () => setIsCancelTooltipOpen(!isCancelTooltipOpen);
+  const toggleEditTooltip = () => setIsEditTooltipOpen(!isEditTooltipOpen);
+  const toggleDeleteTooltip = () => setIsDeleteTooltipOpen(!isDeleteTooltipOpen);
 
   return (
     <ListContainer>
@@ -101,19 +117,28 @@ const List = ({
         )}
         {editClicked ? (
           <EditIconsBox>
+            {/* zindex needed to prevent tooltip flickering */}
             <ConfirmIcon
               id={`confirmButton_${id}`}
               onClick={handleConfirm}
+              style={{ zIndex: '2000' }}
             />
+            {/* zindex needed to prevent tooltip flickering */}
             <CancelIcon
               id={`cancelButton_${id}`}
               onClick={handleCancel}
+              style={{ zIndex: '2000' }}
             />
+            {editClicked && <Tooltip isOpen={isConfirmTooltipOpen} target={`confirmButton_${id}`} toggle={toggleConfirmTooltip} placement="top">Zatwierdź zmiany</Tooltip>}
+            {editClicked && <Tooltip isOpen={isCancelTooltipOpen} target={`cancelButton_${id}`} toggle={toggleCancelTooltip} placement="top">Anuluj zmiany</Tooltip>}
           </EditIconsBox>
         ) : (
           <MenuIconsBox>
-            <EditIcon onClick={() => setEditClicked(!editClicked)} />
-            <DeleteIcon onClick={toggleConfirmDeleteModal} />
+            {/* zindex needed to prevent tooltip flickering */}
+            <EditIcon id={`editButton_${id}`} onClick={() => setEditClicked(!editClicked)} style={{ zIndex: '2000' }}/>
+            <DeleteIcon id={`deleteButton_${id}`} onClick={toggleConfirmDeleteModal} style={{ zIndex: '2000' }} />
+            <Tooltip isOpen={isEditTooltipOpen} target={`editButton_${id}`} toggle={toggleEditTooltip} placement="top">Edytuj listę</Tooltip>
+            <Tooltip isOpen={isDeleteTooltipOpen} target={`deleteButton_${id}`} toggle={toggleDeleteTooltip} placement="top">Usuń listę</Tooltip>
           </MenuIconsBox>
         )}
       </ListUpperBar>

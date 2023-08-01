@@ -2,18 +2,21 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { doc, updateDoc, getDoc } from 'firebase/firestore';
+import { Tooltip } from 'reactstrap';
+import PopupMenu from '../PopupMenu/popupMenu.component';
 import { UserAuth } from '../../context/authContext';
 import { database } from '../../firebase';
 
 import { TaskTitle, TaskContainer, EditTaskField } from './task.styles';
 import { EditIconsBox, ConfirmIcon, CancelIcon } from '../List/list.styles';
-import PopupMenu from '../PopupMenu/popupMenu.component';
 
 const Task = ({
   id, listId, title, removeTaskFromList,
 }) => {
   const [ newTitle, setNewTitle ] = useState(title);
   const [ editClicked, setEditClicked ] = useState(false);
+  const [ confirmTooltipOpen, setConfirmTooltipOpen ] = useState(false);
+  const [ cancelTooltipOpen, setCancelTooltipOpen ] = useState(false);
   const { user } = UserAuth();
 
   const editRef = useRef(false);
@@ -31,10 +34,12 @@ const Task = ({
     editRef.current = false;
     setEditClicked(false);
     setNewTitle(title);
+    setCancelTooltipOpen(false);
   };
 
   const handleConfirm = async () => {
     setEditClicked(false);
+    setConfirmTooltipOpen(false);
     if (!editRef.current) return;
     const listDoc = doc(database, `lists-${user?.uid}`, listId);
     const taskToEdit = {
@@ -63,6 +68,9 @@ const Task = ({
     removeTaskFromList(listId, taskToRemove);
   };
 
+  const toggleConfirmTooltip = () => setConfirmTooltipOpen(!confirmTooltipOpen);
+  const toggleCancelTooltip = () => setCancelTooltipOpen(!cancelTooltipOpen);
+
   return (
     <TaskContainer>
       {editClicked ? (
@@ -79,19 +87,24 @@ const Task = ({
       )}
       {editClicked ? (
         <EditIconsBox>
-          <ConfirmIcon
-            id={`confirmButton_${id}`}
-            onClick={handleConfirm}
-          />
-          <CancelIcon
-            id={`cancelButton_${id}`}
-            onClick={handleCancel}
-          />
+          {/* zindex needed to prevent tooltip flickering */}
+          <div id={`confirmButton_${id}`} style={{ zIndex: '2000' }}>
+            <ConfirmIcon
+              onClick={handleConfirm}
+            />
+          </div>
+          {/* zindex needed to prevent tooltip flickering */}
+          <div id={`cancelButton_${id}`} style={{ zIndex: '2000' }}>
+            <CancelIcon
+              onClick={handleCancel}
+            />
+          </div>
         </EditIconsBox>
       ) : (
-        <PopupMenu onEditClick={handleEditClicked} onDeleteClick={handleRemoveTask} />
+        <PopupMenu id={`menuButton_${id}`} onEditClick={handleEditClicked} onDeleteClick={handleRemoveTask} />
       )}
-
+      {editClicked && <Tooltip isOpen={confirmTooltipOpen} target={`confirmButton_${id}`} toggle={toggleConfirmTooltip} placement="top">Zatwierdź zmiany</Tooltip>}
+      {editClicked && <Tooltip isOpen={cancelTooltipOpen} target={`cancelButton_${id}`} toggle={toggleCancelTooltip} placement="top">Anuluj zmiany</Tooltip>}
     </TaskContainer>
   );
 };

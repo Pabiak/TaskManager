@@ -15,7 +15,7 @@ const ConfirmDeleteModal = ({
   };
 
   return (
-    <Modal size="md" isOpen={open} toggle={toggle}>
+    <Modal zIndex="2001" returnFocusAfterClose={false} size="md" isOpen={open} toggle={toggle}>
       <StyledModalBody>
         Czy na pewno chcesz usunąć listę:&nbsp;
         <Title>
@@ -45,7 +45,7 @@ ConfirmDeleteModal.propTypes = {
 ConfirmDeleteModal.defaultProps = {
   open: false,
   toggle: null,
-  confirmDeleteAction: null,
+  confirmDeleteAction: () => {},
   title: '',
 };
 

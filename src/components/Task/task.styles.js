@@ -24,6 +24,7 @@ export const TaskContainer = styled.div`
     background-color: ${({ theme }) => theme.colors.gray};
     flex-shrink: 0;
     cursor: pointer;
+    transition: background-color .2s ease-in-out;
     &:hover {
         background-color: ${({ theme }) => addAlphaChannel(theme.colors.gray, 0.7)};
     }
