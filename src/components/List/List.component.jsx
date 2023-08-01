@@ -22,6 +22,7 @@ import {
   ConfirmIcon,
   EditIcon,
 } from './List.styles';
+import ConfirmDeleteModal from '../ConfirmDeleteModal/confirmDeleteModal.component';
 
 const List = ({
   id, title, tasks,
@@ -73,8 +74,18 @@ const List = ({
     });
   };
 
+  const [ isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen ] = useState(false);
+
+  const toggleConfirmDeleteModal = () => setIsConfirmDeleteModalOpen(!isConfirmDeleteModalOpen);
+
   return (
     <ListContainer>
+      <ConfirmDeleteModal
+        open={isConfirmDeleteModalOpen}
+        toggle={toggleConfirmDeleteModal}
+        title={title}
+        confirmDeleteAction={deleteList}
+      />
       <ListUpperBar>
         {editClicked ? (
           <EditListField
@@ -102,7 +113,7 @@ const List = ({
         ) : (
           <MenuIconsBox>
             <EditIcon onClick={() => setEditClicked(!editClicked)} />
-            <DeleteIcon onClick={deleteList} />
+            <DeleteIcon onClick={toggleConfirmDeleteModal} />
           </MenuIconsBox>
         )}
       </ListUpperBar>

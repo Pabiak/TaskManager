@@ -40,7 +40,6 @@ const NavBar = () => {
   };
 
   return (
-
     <NavBarContainer>
       <LeftContainer>
         <UserInfo>
