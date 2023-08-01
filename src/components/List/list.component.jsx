@@ -6,8 +6,8 @@ import {
   doc, updateDoc, arrayRemove, arrayUnion, deleteDoc,
 } from 'firebase/firestore';
 import { database } from '../../firebase';
-import { UserAuth } from '../../context/AuthContext';
-import Task from '../Task/Task.component';
+import { UserAuth } from '../../context/authContext';
+import Task from '../Task/task.component';
 import {
   ListContainer,
   ListUpperBar,
@@ -21,7 +21,7 @@ import {
   CancelIcon,
   ConfirmIcon,
   EditIcon,
-} from './List.styles';
+} from './list.styles.js';
 import ConfirmDeleteModal from '../ConfirmDeleteModal/confirmDeleteModal.component';
 
 const List = ({

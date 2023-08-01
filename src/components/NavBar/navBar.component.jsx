@@ -6,7 +6,7 @@ import ReactCountryFlag from 'react-country-flag';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { MdOutlineLogout } from 'react-icons/md';
 import { database } from '../../firebase';
-import { UserAuth } from '../../context/AuthContext';
+import { UserAuth } from '../../context/authContext';
 import {
   NavBarContainer,
   UserInfo,
@@ -19,7 +19,7 @@ import {
   LeftContainer,
   RightContainer,
   NightModeIcon,
-} from './NavBar.styles';
+} from './navBar.styles';
 
 const NavBar = () => {
   const { user, logOut } = UserAuth();
