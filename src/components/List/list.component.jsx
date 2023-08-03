@@ -1,13 +1,14 @@
 /* eslint-disable jsx-a11y/no-autofocus */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import { AiOutlinePlus } from 'react-icons/ai';
 import {
   doc, updateDoc, arrayRemove, arrayUnion, deleteDoc,
 } from 'firebase/firestore';
+import { Tooltip } from 'reactstrap';
 import { database } from '../../firebase';
 import { UserAuth } from '../../context/authContext';
-import { Tooltip } from 'reactstrap';
 import Task from '../Task/task.component';
 import {
   ListContainer,
@@ -24,7 +25,6 @@ import {
   EditIcon,
 } from './list.styles';
 import ConfirmDeleteModal from '../ConfirmDeleteModal/confirmDeleteModal.component';
-import { useEffect } from 'react';
 
 const List = ({
   id, title, tasks,
@@ -37,13 +37,14 @@ const List = ({
   const [ isDeleteTooltipOpen, setIsDeleteTooltipOpen ] = useState(false);
   const [ isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen ] = useState(false);
   const { user } = UserAuth();
+  const { t } = useTranslation();
 
   const addTaskToList = async () => {
     const listDoc = doc(database, `lists-${user?.uid}`, id);
 
     const newTask = {
       id: crypto.randomUUID(),
-      title: 'Nowe zadanie',
+      title: t('list.initialTaskTitle'),
     };
 
     await updateDoc(listDoc, {
@@ -129,16 +130,16 @@ const List = ({
               onClick={handleCancel}
               style={{ zIndex: '2000' }}
             />
-            {editClicked && <Tooltip isOpen={isConfirmTooltipOpen} target={`confirmButton_${id}`} toggle={toggleConfirmTooltip} placement="top">Zatwierdź zmiany</Tooltip>}
-            {editClicked && <Tooltip isOpen={isCancelTooltipOpen} target={`cancelButton_${id}`} toggle={toggleCancelTooltip} placement="top">Anuluj zmiany</Tooltip>}
+            {editClicked && <Tooltip isOpen={isConfirmTooltipOpen} target={`confirmButton_${id}`} toggle={toggleConfirmTooltip} placement="top">{t('toolTip.confirm')}</Tooltip>}
+            {editClicked && <Tooltip isOpen={isCancelTooltipOpen} target={`cancelButton_${id}`} toggle={toggleCancelTooltip} placement="top">{t('toolTip.cancel')}</Tooltip>}
           </EditIconsBox>
         ) : (
           <MenuIconsBox>
             {/* zindex needed to prevent tooltip flickering */}
-            <EditIcon id={`editButton_${id}`} onClick={() => setEditClicked(!editClicked)} style={{ zIndex: '2000' }}/>
+            <EditIcon id={`editButton_${id}`} onClick={() => setEditClicked(!editClicked)} style={{ zIndex: '2000' }} />
             <DeleteIcon id={`deleteButton_${id}`} onClick={toggleConfirmDeleteModal} style={{ zIndex: '2000' }} />
-            <Tooltip isOpen={isEditTooltipOpen} target={`editButton_${id}`} toggle={toggleEditTooltip} placement="top">Edytuj listę</Tooltip>
-            <Tooltip isOpen={isDeleteTooltipOpen} target={`deleteButton_${id}`} toggle={toggleDeleteTooltip} placement="top">Usuń listę</Tooltip>
+            <Tooltip isOpen={isEditTooltipOpen} target={`editButton_${id}`} toggle={toggleEditTooltip} placement="top">{t('toolTip.editList')}</Tooltip>
+            <Tooltip isOpen={isDeleteTooltipOpen} target={`deleteButton_${id}`} toggle={toggleDeleteTooltip} placement="top">{t('toolTip.deleteList')}</Tooltip>
           </MenuIconsBox>
         )}
       </ListUpperBar>
@@ -155,7 +156,7 @@ const List = ({
       </TaskContainer>
       <AddTaskButton onClick={addTaskToList}>
         <AiOutlinePlus />
-        Dodaj Zadanie
+        {t('list.addTask')}
       </AddTaskButton>
     </ListContainer>
   );

@@ -1,0 +1,35 @@
+{
+    "loginPage": {
+        "signIn": "Zaloguj się",
+        "signInWithGoogle": "Zaloguj się przez Google",
+        "signInWithGithub": "Zaloguj się przez Github"
+    },
+    "navBar": {
+        "logout": "Wyloguj się",
+        "addList": "Dodaj listę",
+        "initialListTitle": "Lista"
+    },
+    "list": {
+        "initialTaskTitle": "Nowe zadanie",
+        "addTask": "Dodaj zadanie"
+    },
+    "toolTip": {
+        "deleteList": "Usuń listę",
+        "editList": "Edytuj listę",
+        "confirm": "Potwierdź",
+        "cancel": "Anuluj",
+        "openMenu": "Otwórz menu",
+        "changeLanguage": "Zmień język"
+    },
+    "popupMenu": {
+        "edit": "Edytuj",
+        "delete": "Usuń",
+        "addLabel": "Dodaj etykietę"
+    },
+    "confirmDeleteModal": {
+        "title": "Czy na pewno chcesz usunąć listę",
+        "warning": "Ta operacja jest nieodwracalna!",
+        "confirm": "Potwierdź",
+        "cancel": "Anuluj"
+    }
+}

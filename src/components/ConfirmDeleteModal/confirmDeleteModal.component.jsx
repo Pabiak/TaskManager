@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import {
   Modal, Button,
 } from 'reactstrap';
-
+import { useTranslation } from 'react-i18next';
 import { ButtonContainer, Title, StyledModalBody } from './confirmDeleteModal.styles';
 
 const ConfirmDeleteModal = ({
   open, toggle, confirmDeleteAction, title,
 }) => {
+  const { t } = useTranslation();
   const confirmButtonClick = () => {
     toggle();
     confirmDeleteAction();
@@ -17,17 +18,21 @@ const ConfirmDeleteModal = ({
   return (
     <Modal zIndex="2001" returnFocusAfterClose={false} size="md" isOpen={open} toggle={toggle}>
       <StyledModalBody>
-        Czy na pewno chcesz usunąć listę:&nbsp;
+        {t('confirmDeleteModal.title')}
+        &nbsp;
         <Title>
           {title}
         </Title>
         ?
+        <div>
+          {t('confirmDeleteModal.warning')}
+        </div>
         <ButtonContainer>
           <Button type="submit" onClick={toggle} color="secondary">
-            Anuluj
+            {t('confirmDeleteModal.cancel')}
           </Button>
           <Button type="submit" onClick={confirmButtonClick} color="danger">
-            Potwierdź
+            {t('confirmDeleteModal.confirm')}
           </Button>
         </ButtonContainer>
       </StyledModalBody>
