@@ -1,0 +1,35 @@
+{
+    "loginPage": {
+        "signIn": "Login",
+        "signInWithGoogle": "Login with Google",
+        "signInWithGithub": "Login with Github"
+    },
+    "navBar": {
+        "logout": "Logout",
+        "addList": "Add List",
+        "initialListTitle": "List"
+    },
+    "list": {
+        "initialTaskTitle": "New Task",
+        "addTask": "Add Task"
+    },
+    "toolTip": {
+        "deleteList": "Delete List",
+        "editList": "Edit List",
+        "confirm": "Confirm",
+        "cancel": "Cancel",
+        "openMenu": "Open Menu",
+        "changeLanguage": "Change Language"
+    },
+    "popupMenu": {
+        "edit": "Edit",
+        "delete": "Delete",
+        "addLabel": "Add Label"
+    },
+    "confirmDeleteModal": {
+        "title": "Are you sure you want to delete this list:",
+        "warning": "This action cannot be undone.",
+        "confirm": "Confirm",
+        "cancel": "Cancel"
+    }
+}

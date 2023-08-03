@@ -56,6 +56,10 @@ export const LogOut = styled.div`
     font-family: ${({ theme }) => theme.fontFamilies.primary};
     cursor: pointer;
     padding-right: 1rem;
+    transition: all 0.1s ease-in-out;
+    &:hover{
+        color: ${({ theme }) => theme.colors.white};
+    }
 `;
 
 export const LogOutText = styled.span`

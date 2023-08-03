@@ -5,6 +5,7 @@ import { collection, addDoc } from 'firebase/firestore';
 import ReactCountryFlag from 'react-country-flag';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { MdOutlineLogout } from 'react-icons/md';
+import { useTranslation } from 'react-i18next';
 import { database } from '../../firebase';
 import { UserAuth } from '../../context/authContext';
 import {
@@ -23,6 +24,7 @@ import {
 
 const NavBar = () => {
   const { user, logOut } = UserAuth();
+  const { t, i18n } = useTranslation();
   const handleLogOut = async () => {
     try {
       await logOut();
@@ -34,7 +36,7 @@ const NavBar = () => {
   const addList = () => {
     const listCollection = collection(database, `lists-${user?.uid}`);
     addDoc(listCollection, {
-      title: 'Lista',
+      title: t('navBar.initialListTitle'),
       tasks: [],
     });
   };
@@ -48,18 +50,18 @@ const NavBar = () => {
         </UserInfo>
         <AddListButton onClick={addList}>
           <AiOutlinePlus />
-          Dodaj Listę
+          {t('navBar.addList')}
         </AddListButton>
       </LeftContainer>
       <RightContainer>
-        <NightModeIcon />
+        {/* <NightModeIcon /> */}
         <FlagContainer>
-          <ReactCountryFlag countryCode="PL" svg />
-          <ReactCountryFlag countryCode="GB" svg />
+          {i18n.language === 'en' ? <ReactCountryFlag countryCode="PL" svg onClick={() => i18n.changeLanguage('pl')} />
+            : <ReactCountryFlag countryCode="GB" svg onClick={() => i18n.changeLanguage('en')} />}
         </FlagContainer>
         <LogOut onClick={handleLogOut}>
           <MdOutlineLogout />
-          <LogOutText>Wyloguj się</LogOutText>
+          <LogOutText>{t('navBar.logout')}</LogOutText>
         </LogOut>
       </RightContainer>
     </NavBarContainer>

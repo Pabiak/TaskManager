@@ -56,3 +56,14 @@ export const ButtonContainer = styled.div`
     height: fit-content;
     gap: 1rem;
 `;
+
+export const FlagContainer = styled.div`
+    display: flex;
+    background-color: #eee;
+    padding: .2rem 0;
+    align-items: center;
+    margin-top: .5rem;
+    justify-content: center;
+    font-size: ${({ theme }) => theme.fontSizes.xl2};
+    cursor: pointer;
+`;

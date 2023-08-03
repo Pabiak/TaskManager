@@ -5,6 +5,7 @@ import {
   Tooltip,
 } from 'reactstrap';
 
+import { useTranslation } from 'react-i18next';
 import { BiSolidLabel } from 'react-icons/bi';
 import { BsThreeDots, BsPencilFill, BsFillTrashFill } from 'react-icons/bs';
 import {
@@ -14,7 +15,7 @@ import {
 const PopupMenu = ({ id, onEditClick, onDeleteClick }) => {
   const [ dropdownOpen, setDropdownOpen ] = useState(false);
   const [ menuTooltipOpen, setMenuTooltipOpen ] = useState(false);
-
+  const { t } = useTranslation();
   const toggleDropdown = () => setDropdownOpen((prev) => {
     if (prev) setMenuTooltipOpen(false);
     return !prev;
@@ -30,19 +31,19 @@ const PopupMenu = ({ id, onEditClick, onDeleteClick }) => {
         <StyledDropdownMenu>
           <StyledDropdownItem disabled>
             <BiSolidLabel />
-            Dodaj etykietę
+            {t('popupMenu.addLabel')}
           </StyledDropdownItem>
           <StyledDropdownItem onClick={onEditClick}>
             <BsPencilFill />
-            Edytuj
+            {t('popupMenu.edit')}
           </StyledDropdownItem>
           <StyledDropdownItem onClick={onDeleteClick}>
             <BsFillTrashFill />
-            Usuń
+            {t('popupMenu.delete')}
           </StyledDropdownItem>
         </StyledDropdownMenu>
       </Dropdown>
-      {dropdownOpen || <Tooltip isOpen={menuTooltipOpen} target={id} toggle={toggleMenuTooltip} placement="top">Otwórz menu</Tooltip>}
+      {dropdownOpen || <Tooltip isOpen={menuTooltipOpen} target={id} toggle={toggleMenuTooltip} placement="top">{t('toolTip.openMenu')}</Tooltip>}
     </PopupMenuContainer>
   );
 };

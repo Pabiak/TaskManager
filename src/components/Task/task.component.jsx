@@ -6,7 +6,7 @@ import { Tooltip } from 'reactstrap';
 import PopupMenu from '../PopupMenu/popupMenu.component';
 import { UserAuth } from '../../context/authContext';
 import { database } from '../../firebase';
-
+import { useTranslation } from 'react-i18next';
 import { TaskTitle, TaskContainer, EditTaskField } from './task.styles';
 import { EditIconsBox, ConfirmIcon, CancelIcon } from '../List/list.styles';
 
@@ -18,6 +18,7 @@ const Task = ({
   const [ confirmTooltipOpen, setConfirmTooltipOpen ] = useState(false);
   const [ cancelTooltipOpen, setCancelTooltipOpen ] = useState(false);
   const { user } = UserAuth();
+  const { t } = useTranslation();
 
   const editRef = useRef(false);
 
@@ -103,8 +104,8 @@ const Task = ({
       ) : (
         <PopupMenu id={`menuButton_${id}`} onEditClick={handleEditClicked} onDeleteClick={handleRemoveTask} />
       )}
-      {editClicked && <Tooltip isOpen={confirmTooltipOpen} target={`confirmButton_${id}`} toggle={toggleConfirmTooltip} placement="top">Zatwierdź zmiany</Tooltip>}
-      {editClicked && <Tooltip isOpen={cancelTooltipOpen} target={`cancelButton_${id}`} toggle={toggleCancelTooltip} placement="top">Anuluj zmiany</Tooltip>}
+      {editClicked && <Tooltip isOpen={confirmTooltipOpen} target={`confirmButton_${id}`} toggle={toggleConfirmTooltip} placement="top">{t('toolTip.confirm')}</Tooltip>}
+      {editClicked && <Tooltip isOpen={cancelTooltipOpen} target={`cancelButton_${id}`} toggle={toggleCancelTooltip} placement="top">{t('toolTip.cancel')}</Tooltip>}
     </TaskContainer>
   );
 };
