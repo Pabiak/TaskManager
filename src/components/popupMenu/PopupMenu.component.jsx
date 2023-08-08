@@ -16,6 +16,7 @@ const PopupMenu = ({ id, onEditClick, onDeleteClick }) => {
   const [ dropdownOpen, setDropdownOpen ] = useState(false);
   const [ menuTooltipOpen, setMenuTooltipOpen ] = useState(false);
   const { t } = useTranslation();
+
   const toggleDropdown = () => setDropdownOpen((prev) => {
     if (prev) setMenuTooltipOpen(false);
     return !prev;

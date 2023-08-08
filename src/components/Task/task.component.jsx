@@ -1,12 +1,15 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/no-autofocus */
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { doc, updateDoc, getDoc } from 'firebase/firestore';
 import { Tooltip } from 'reactstrap';
+import { useTranslation } from 'react-i18next';
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import PopupMenu from '../PopupMenu/popupMenu.component';
 import { UserAuth } from '../../context/authContext';
 import { database } from '../../firebase';
-import { useTranslation } from 'react-i18next';
 import { TaskTitle, TaskContainer, EditTaskField } from './task.styles';
 import { EditIconsBox, ConfirmIcon, CancelIcon } from '../List/list.styles';
 
@@ -72,8 +75,20 @@ const Task = ({
   const toggleConfirmTooltip = () => setConfirmTooltipOpen(!confirmTooltipOpen);
   const toggleCancelTooltip = () => setCancelTooltipOpen(!cancelTooltipOpen);
 
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+  } = useSortable({ id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
   return (
-    <TaskContainer>
+    <TaskContainer ref={setNodeRef} style={style} {...attributes} {...listeners}>
       {editClicked ? (
         <EditTaskField
           type="textarea"

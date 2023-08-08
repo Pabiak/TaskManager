@@ -1,12 +1,20 @@
 /* eslint-disable jsx-a11y/no-autofocus */
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import {
+  DndContext, PointerSensor, closestCenter, closestCorners, rectIntersection, useSensor,
+  useDroppable,
+} from '@dnd-kit/core';
 import { useTranslation } from 'react-i18next';
 import { AiOutlinePlus } from 'react-icons/ai';
 import {
-  doc, updateDoc, arrayRemove, arrayUnion, deleteDoc,
+  doc, updateDoc, arrayRemove, arrayUnion, deleteDoc, getDoc,
 } from 'firebase/firestore';
 import { Tooltip } from 'reactstrap';
+import { useEffect } from 'react';
+import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable';
+import Droppable from '../D&D/droppable';
+import Draggable from '../D&D/draggable';
 import { database } from '../../firebase';
 import { UserAuth } from '../../context/authContext';
 import Task from '../Task/task.component';
@@ -38,6 +46,12 @@ const List = ({
   const [ isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen ] = useState(false);
   const { user } = UserAuth();
   const { t } = useTranslation();
+  const [ taskArray, setTaskArray ] = useState(JSON.parse(JSON.stringify(tasks)));
+
+  useEffect(() => {
+    setTaskArray(JSON.parse(JSON.stringify(tasks)));
+    console.log('tasks changed');
+  }, [ tasks ]);
 
   const addTaskToList = async () => {
     const listDoc = doc(database, `lists-${user?.uid}`, id);
@@ -57,6 +71,13 @@ const List = ({
 
     await updateDoc(listDoc, {
       tasks: arrayRemove(taskToRemove),
+    });
+  };
+
+  const updateTasksInList = async (listId, tasksToUpdate) => {
+    const listDoc = doc(database, `lists-${user?.uid}`, listId);
+    await updateDoc(listDoc, {
+      tasks: tasksToUpdate,
     });
   };
 
@@ -94,6 +115,32 @@ const List = ({
   const toggleCancelTooltip = () => setIsCancelTooltipOpen(!isCancelTooltipOpen);
   const toggleEditTooltip = () => setIsEditTooltipOpen(!isEditTooltipOpen);
   const toggleDeleteTooltip = () => setIsDeleteTooltipOpen(!isDeleteTooltipOpen);
+
+  const { setNodeRef } = useDroppable({
+    id: `droppable-${id}`,
+  });
+
+  const sensors = [ useSensor(PointerSensor, {
+    activationConstraint: {
+      delay: 70,
+    },
+  }) ];
+
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+
+    if (active.id !== over.id) {
+      setTaskArray((prevTasks) => {
+        const oldIndex = prevTasks.findIndex((task) => task.id === active.id);
+        const newIndex = prevTasks.findIndex((task) => task.id === over.id);
+        return arrayMove(prevTasks, oldIndex, newIndex);
+      });
+    }
+  };
+
+  useEffect(() => {
+    updateTasksInList(id, taskArray);
+  }, [ taskArray ]);
 
   return (
     <ListContainer>
@@ -143,17 +190,28 @@ const List = ({
           </MenuIconsBox>
         )}
       </ListUpperBar>
-      <TaskContainer>
-        {tasks.map((task) => (
-          <Task
-            key={task.id}
-            id={task.id}
-            listId={id}
-            title={task.title}
-            removeTaskFromList={removeTaskFromList}
-          />
-        ))}
-      </TaskContainer>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCorners}
+        onDragEnd={handleDragEnd}
+      >
+        <TaskContainer ref={setNodeRef}>
+          <SortableContext
+            items={taskArray.map((task) => task.id)}
+            strategy={verticalListSortingStrategy}
+          >
+            {taskArray.map((task) => (
+              <Task
+                key={task.id}
+                id={task.id}
+                listId={id}
+                title={task.title}
+                removeTaskFromList={removeTaskFromList}
+              />
+            ))}
+          </SortableContext>
+        </TaskContainer>
+      </DndContext>
       <AddTaskButton onClick={addTaskToList}>
         <AiOutlinePlus />
         {t('list.addTask')}
@@ -161,6 +219,7 @@ const List = ({
     </ListContainer>
   );
 };
+
 export default List;
 
 List.propTypes = {
