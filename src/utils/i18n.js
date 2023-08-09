@@ -5,7 +5,7 @@ import LanguageDetector from 'i18next-browser-languagedetector';
 
 i18n.use(Backend).use(LanguageDetector).use(initReactI18next).init({
   fallbackLng: 'pl',
-  debug: true,
+  debug: false,
   interpolation: {
     escapeValue: false,
   },

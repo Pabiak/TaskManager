@@ -1,20 +1,21 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/no-autofocus */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
-  DndContext, PointerSensor, closestCenter, closestCorners, rectIntersection, useSensor,
+  DndContext, PointerSensor, closestCorners, useSensor,
   useDroppable,
 } from '@dnd-kit/core';
 import { useTranslation } from 'react-i18next';
 import { AiOutlinePlus } from 'react-icons/ai';
 import {
-  doc, updateDoc, arrayRemove, arrayUnion, deleteDoc, getDoc,
+  doc, updateDoc, arrayRemove, arrayUnion, deleteDoc,
 } from 'firebase/firestore';
 import { Tooltip } from 'reactstrap';
-import { useEffect } from 'react';
-import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable';
-import Droppable from '../D&D/droppable';
-import Draggable from '../D&D/draggable';
+import {
+  SortableContext, verticalListSortingStrategy, arrayMove, useSortable,
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import { database } from '../../firebase';
 import { UserAuth } from '../../context/authContext';
 import Task from '../Task/task.component';
@@ -50,7 +51,6 @@ const List = ({
 
   useEffect(() => {
     setTaskArray(JSON.parse(JSON.stringify(tasks)));
-    console.log('tasks changed');
   }, [ tasks ]);
 
   const addTaskToList = async () => {
@@ -116,13 +116,14 @@ const List = ({
   const toggleEditTooltip = () => setIsEditTooltipOpen(!isEditTooltipOpen);
   const toggleDeleteTooltip = () => setIsDeleteTooltipOpen(!isDeleteTooltipOpen);
 
-  const { setNodeRef } = useDroppable({
+  const { setTaskNodeRef } = useDroppable({
     id: `droppable-${id}`,
   });
 
   const sensors = [ useSensor(PointerSensor, {
     activationConstraint: {
       delay: 70,
+      tolerance: 5,
     },
   }) ];
 
@@ -142,8 +143,22 @@ const List = ({
     updateTasksInList(id, taskArray);
   }, [ taskArray ]);
 
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0 : 1,
+  };
   return (
-    <ListContainer>
+    <ListContainer ref={setNodeRef} style={style} {...attributes} {...listeners}>
       <ConfirmDeleteModal
         open={isConfirmDeleteModalOpen}
         toggle={toggleConfirmDeleteModal}
@@ -195,7 +210,7 @@ const List = ({
         collisionDetection={closestCorners}
         onDragEnd={handleDragEnd}
       >
-        <TaskContainer ref={setNodeRef}>
+        <TaskContainer ref={setTaskNodeRef}>
           <SortableContext
             items={taskArray.map((task) => task.id)}
             strategy={verticalListSortingStrategy}
