@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BsThreeDots } from 'react-icons/bs';
+import { BsThreeDots, BsFillGrid3X3GapFill } from 'react-icons/bs';
 import { EditListField } from '../List/list.styles';
 
 const addAlphaChannel = (color, alpha) => {
@@ -28,6 +28,7 @@ export const TaskContainer = styled.div`
     &:hover {
         background-color: ${({ theme }) => addAlphaChannel(theme.colors.gray, 0.7)};
     }
+    /* z-index: 1999; */
 `;
 
 export const TaskTitle = styled.span`
@@ -37,6 +38,7 @@ export const TaskTitle = styled.span`
     font-family: ${({ theme }) => theme.fontFamilies.primary};
     align-self: flex-start;
     padding-left: .5rem;
+    z-index: 1999;
 `;
 
 export const TaskUpperBar = styled.div`
@@ -44,6 +46,7 @@ export const TaskUpperBar = styled.div`
     align-items: center;
     justify-content: flex-end;
     width: 100%;
+    z-index: 1999;
 `;
 
 export const MenuIcon = styled(BsThreeDots)`
@@ -51,8 +54,25 @@ export const MenuIcon = styled(BsThreeDots)`
     color: ${({ theme }) => theme.colors.lightGray};
     cursor: pointer;
     flex-shrink: 0;
+    z-index: 1999;
 `;
 
 export const EditTaskField = styled(EditListField)`
     width: 9.5rem;
+    z-index: 1999;
+`;
+
+export const IconBase = styled.div`
+    font-size: ${({ theme }) => theme.fontSizes.lg};
+    color: ${({ theme }) => theme.colors.lightGray};
+    cursor: pointer;
+`;
+
+export const DragHandle = styled(IconBase).attrs({ as: BsFillGrid3X3GapFill })`
+    align-self: center;
+    font-size: ${({ theme }) => theme.fontSizes.md};
+
+    &:focus {
+        outline: none;
+    }
 `;

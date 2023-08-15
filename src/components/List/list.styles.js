@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BsPencilFill, BsFillTrashFill } from 'react-icons/bs';
+import { BsPencilFill, BsFillTrashFill, BsFillGrid3X3GapFill } from 'react-icons/bs';
 import { Input } from 'reactstrap';
 import { AiOutlineCheck, AiOutlineClose } from 'react-icons/ai';
 
@@ -20,7 +20,7 @@ export const ListTitle = styled.span`
     color: ${({ theme }) => theme.colors.lightGray};
     font-family: ${({ theme }) => theme.fontFamilies.primary};
     padding-left: 0.5rem;
-    width: 75%;
+    width: 85%;
     overflow: hidden;
     text-overflow: ellipsis;
 `;
@@ -124,5 +124,14 @@ export const EditIcon = styled(IconBase).attrs({ as: BsPencilFill })`
     font-size: ${({ theme }) => theme.fontSizes.md};
     &:hover {
         color: white;
+    }
+`;
+
+export const DragHandle = styled(IconBase).attrs({ as: BsFillGrid3X3GapFill })`
+    align-self: center;
+    font-size: ${({ theme }) => theme.fontSizes.xl};
+
+    &:focus {
+        outline: none;
     }
 `;

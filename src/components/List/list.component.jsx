@@ -1,12 +1,21 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable jsx-a11y/no-autofocus */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import {
+  DndContext, PointerSensor, closestCorners, useSensor,
+  useDroppable,
+} from '@dnd-kit/core';
 import { useTranslation } from 'react-i18next';
 import { AiOutlinePlus } from 'react-icons/ai';
 import {
   doc, updateDoc, arrayRemove, arrayUnion, deleteDoc,
 } from 'firebase/firestore';
 import { Tooltip } from 'reactstrap';
+import {
+  SortableContext, verticalListSortingStrategy, arrayMove, useSortable,
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
 import { database } from '../../firebase';
 import { UserAuth } from '../../context/authContext';
 import Task from '../Task/task.component';
@@ -23,6 +32,7 @@ import {
   CancelIcon,
   ConfirmIcon,
   EditIcon,
+  DragHandle,
 } from './list.styles';
 import ConfirmDeleteModal from '../ConfirmDeleteModal/confirmDeleteModal.component';
 
@@ -38,6 +48,11 @@ const List = ({
   const [ isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen ] = useState(false);
   const { user } = UserAuth();
   const { t } = useTranslation();
+  const [ taskArray, setTaskArray ] = useState(JSON.parse(JSON.stringify(tasks)));
+
+  useEffect(() => {
+    setTaskArray(JSON.parse(JSON.stringify(tasks)));
+  }, [ tasks ]);
 
   const addTaskToList = async () => {
     const listDoc = doc(database, `lists-${user?.uid}`, id);
@@ -57,6 +72,13 @@ const List = ({
 
     await updateDoc(listDoc, {
       tasks: arrayRemove(taskToRemove),
+    });
+  };
+
+  const updateTasksInList = async (listId, tasksToUpdate) => {
+    const listDoc = doc(database, `lists-${user?.uid}`, listId);
+    await updateDoc(listDoc, {
+      tasks: tasksToUpdate,
     });
   };
 
@@ -95,8 +117,44 @@ const List = ({
   const toggleEditTooltip = () => setIsEditTooltipOpen(!isEditTooltipOpen);
   const toggleDeleteTooltip = () => setIsDeleteTooltipOpen(!isDeleteTooltipOpen);
 
+  const { setTaskNodeRef } = useDroppable({
+    id: `droppable-${id}`,
+  });
+
+  const sensors = [ useSensor(PointerSensor) ];
+
+  const handleDragEnd = (event) => {
+    const { active, over } = event;
+
+    if (active.id !== over.id) {
+      setTaskArray((prevTasks) => {
+        const oldIndex = prevTasks.findIndex((task) => task.id === active.id);
+        const newIndex = prevTasks.findIndex((task) => task.id === over.id);
+        return arrayMove(prevTasks, oldIndex, newIndex);
+      });
+    }
+  };
+
+  useEffect(() => {
+    updateTasksInList(id, taskArray);
+  }, [ taskArray ]);
+
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    opacity: isDragging ? 0 : 1,
+  };
   return (
-    <ListContainer>
+    <ListContainer ref={setNodeRef} style={style}>
       <ConfirmDeleteModal
         open={isConfirmDeleteModalOpen}
         toggle={toggleConfirmDeleteModal}
@@ -114,7 +172,10 @@ const List = ({
             // todo: wymyslic sposob na to zeby dalo się mieć włączony tylko jeden input
           />
         ) : (
-          <ListTitle>{title}</ListTitle>
+          <>
+            <DragHandle {...attributes} {...listeners} />
+            <ListTitle>{title}</ListTitle>
+          </>
         )}
         {editClicked ? (
           <EditIconsBox>
@@ -143,17 +204,28 @@ const List = ({
           </MenuIconsBox>
         )}
       </ListUpperBar>
-      <TaskContainer>
-        {tasks.map((task) => (
-          <Task
-            key={task.id}
-            id={task.id}
-            listId={id}
-            title={task.title}
-            removeTaskFromList={removeTaskFromList}
-          />
-        ))}
-      </TaskContainer>
+      <DndContext
+        sensors={sensors}
+        collisionDetection={closestCorners}
+        onDragEnd={handleDragEnd}
+      >
+        <TaskContainer ref={setTaskNodeRef}>
+          <SortableContext
+            items={taskArray.map((task) => task.id)}
+            strategy={verticalListSortingStrategy}
+          >
+            {taskArray.map((task) => (
+              <Task
+                key={task.id}
+                id={task.id}
+                listId={id}
+                title={task.title}
+                removeTaskFromList={removeTaskFromList}
+              />
+            ))}
+          </SortableContext>
+        </TaskContainer>
+      </DndContext>
       <AddTaskButton onClick={addTaskToList}>
         <AiOutlinePlus />
         {t('list.addTask')}
@@ -161,6 +233,7 @@ const List = ({
     </ListContainer>
   );
 };
+
 export default List;
 
 List.propTypes = {
