@@ -1,7 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { collection, addDoc } from 'firebase/firestore';
+import {
+  collection, getDocs, addDoc,
+} from 'firebase/firestore';
 import ReactCountryFlag from 'react-country-flag';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { MdOutlineLogout } from 'react-icons/md';
@@ -19,7 +21,6 @@ import {
   FlagContainer,
   LeftContainer,
   RightContainer,
-  NightModeIcon,
 } from './navBar.styles';
 
 const NavBar = () => {
@@ -33,11 +34,14 @@ const NavBar = () => {
     }
   };
 
-  const addList = () => {
+  const addList = async () => {
     const listCollection = collection(database, `lists-${user?.uid}`);
+    const snapshot = await getDocs(listCollection);
+    const currentCount = snapshot.size;
     addDoc(listCollection, {
       title: t('navBar.initialListTitle'),
       tasks: [],
+      order: currentCount + 1,
     });
   };
 
@@ -54,7 +58,6 @@ const NavBar = () => {
         </AddListButton>
       </LeftContainer>
       <RightContainer>
-        {/* <NightModeIcon /> */}
         <FlagContainer>
           {i18n.language === 'en' ? <ReactCountryFlag countryCode="PL" svg onClick={() => i18n.changeLanguage('pl')} />
             : <ReactCountryFlag countryCode="GB" svg onClick={() => i18n.changeLanguage('en')} />}

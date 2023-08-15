@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { BsThreeDots } from 'react-icons/bs';
+import { BsThreeDots, BsFillGrid3X3GapFill } from 'react-icons/bs';
 import { EditListField } from '../List/list.styles';
 
 const addAlphaChannel = (color, alpha) => {
@@ -60,4 +60,19 @@ export const MenuIcon = styled(BsThreeDots)`
 export const EditTaskField = styled(EditListField)`
     width: 9.5rem;
     z-index: 1999;
+`;
+
+export const IconBase = styled.div`
+    font-size: ${({ theme }) => theme.fontSizes.lg};
+    color: ${({ theme }) => theme.colors.lightGray};
+    cursor: pointer;
+`;
+
+export const DragHandle = styled(IconBase).attrs({ as: BsFillGrid3X3GapFill })`
+    align-self: center;
+    font-size: ${({ theme }) => theme.fontSizes.md};
+
+    &:focus {
+        outline: none;
+    }
 `;

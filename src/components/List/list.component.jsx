@@ -32,6 +32,7 @@ import {
   CancelIcon,
   ConfirmIcon,
   EditIcon,
+  DragHandle,
 } from './list.styles';
 import ConfirmDeleteModal from '../ConfirmDeleteModal/confirmDeleteModal.component';
 
@@ -120,12 +121,7 @@ const List = ({
     id: `droppable-${id}`,
   });
 
-  const sensors = [ useSensor(PointerSensor, {
-    activationConstraint: {
-      delay: 70,
-      tolerance: 5,
-    },
-  }) ];
+  const sensors = [ useSensor(PointerSensor) ];
 
   const handleDragEnd = (event) => {
     const { active, over } = event;
@@ -158,7 +154,7 @@ const List = ({
     opacity: isDragging ? 0 : 1,
   };
   return (
-    <ListContainer ref={setNodeRef} style={style} {...attributes} {...listeners}>
+    <ListContainer ref={setNodeRef} style={style}>
       <ConfirmDeleteModal
         open={isConfirmDeleteModalOpen}
         toggle={toggleConfirmDeleteModal}
@@ -176,7 +172,10 @@ const List = ({
             // todo: wymyslic sposob na to zeby dalo się mieć włączony tylko jeden input
           />
         ) : (
-          <ListTitle>{title}</ListTitle>
+          <>
+            <DragHandle {...attributes} {...listeners} />
+            <ListTitle>{title}</ListTitle>
+          </>
         )}
         {editClicked ? (
           <EditIconsBox>

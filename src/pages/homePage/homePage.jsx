@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import {
-  collection, onSnapshot, query,
+  collection, onSnapshot, query, doc, updateDoc, orderBy,
 } from 'firebase/firestore';
 import { Spinner } from 'reactstrap';
 import {
   DndContext, PointerSensor, closestCorners, useDroppable, useSensor, DragOverlay,
 } from '@dnd-kit/core';
 import {
-  SortableContext, horizontalListSortingStrategy, arrayMove, useSortable,
+  SortableContext, horizontalListSortingStrategy, arrayMove,
 } from '@dnd-kit/sortable';
 import NavBar from '../../components/NavBar/navBar.component';
 import List from '../../components/List/list.component';
@@ -22,7 +22,7 @@ const HomePage = () => {
 
   const getTasks = async () => {
     setIsLoading(true);
-    const dbQuery = query(collection(database, `lists-${user?.uid}`));
+    const dbQuery = query(collection(database, `lists-${user?.uid}`), orderBy('order', 'asc'));
     onSnapshot(dbQuery, (snapshot) => {
       setListsFromDB(snapshot.docs.map((document) => ({
         id: document.id,
@@ -40,12 +40,7 @@ const HomePage = () => {
     id: `droppable-lists-${user?.uid}`,
   });
 
-  const sensors = [ useSensor(PointerSensor, {
-    activationConstraint: {
-      delay: 150,
-      tolerance: 5,
-    },
-  }) ];
+  const sensors = [ useSensor(PointerSensor) ];
 
   const [ draggedItem, setDraggedItem ] = useState(null);
 
@@ -70,8 +65,13 @@ const HomePage = () => {
     setDraggedItem(null);
   };
 
-  // todo: update lists order in database
-
+  // update order of lists in database
+  useEffect(() => {
+    listsFromDB.forEach(async (list, index) => {
+      const listRef = doc(database, `lists-${user?.uid}`, list.id);
+      await updateDoc(listRef, { order: index + 1 });
+    });
+  }, [ listsFromDB ]);
   return (
     <>
       {isLoading && <Spinner />}

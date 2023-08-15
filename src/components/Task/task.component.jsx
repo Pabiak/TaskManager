@@ -10,7 +10,7 @@ import { CSS } from '@dnd-kit/utilities';
 import PopupMenu from '../PopupMenu/popupMenu.component';
 import { UserAuth } from '../../context/authContext';
 import { database } from '../../firebase';
-import { TaskTitle, TaskContainer, EditTaskField } from './task.styles';
+import { TaskTitle, TaskContainer, EditTaskField, DragHandle } from './task.styles';
 import { EditIconsBox, ConfirmIcon, CancelIcon } from '../List/list.styles';
 
 const Task = ({
@@ -88,7 +88,7 @@ const Task = ({
     transition,
   };
   return (
-    <TaskContainer ref={setNodeRef} style={style} {...attributes} {...listeners}>
+    <TaskContainer ref={setNodeRef} style={style}>
       {editClicked ? (
         <EditTaskField
           type="textarea"
@@ -99,7 +99,10 @@ const Task = ({
           // todo: wymyslic sposob na to zeby dalo się mieć włączony tylko jeden input
         />
       ) : (
-        <TaskTitle>{title}</TaskTitle>
+        <div>
+          <DragHandle {...attributes} {...listeners} />
+          <TaskTitle>{title}</TaskTitle>
+        </div>
       )}
       {editClicked ? (
         <EditIconsBox>
