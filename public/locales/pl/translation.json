@@ -31,5 +31,11 @@
         "warning": "Ta operacja jest nieodwracalna!",
         "confirm": "Potwierdź",
         "cancel": "Anuluj"
+    },
+    "taskLabel": {
+        "message": "Dodaj etykietę do zadania",
+        "high": "Wysoki",
+        "medium": "Średni",
+        "low": "Niski"
     }
 }

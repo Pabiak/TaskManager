@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
   DndContext, PointerSensor, closestCorners, useSensor,
-  useDroppable,
+  useDroppable, DragOverlay,
 } from '@dnd-kit/core';
 import { useTranslation } from 'react-i18next';
 import { AiOutlinePlus } from 'react-icons/ai';
@@ -46,6 +46,7 @@ const List = ({
   const [ isEditTooltipOpen, setIsEditTooltipOpen ] = useState(false);
   const [ isDeleteTooltipOpen, setIsDeleteTooltipOpen ] = useState(false);
   const [ isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen ] = useState(false);
+  const [ draggedItem, setDraggedItem ] = useState(null);
   const { user } = UserAuth();
   const { t } = useTranslation();
   const [ taskArray, setTaskArray ] = useState(JSON.parse(JSON.stringify(tasks)));
@@ -123,6 +124,13 @@ const List = ({
 
   const sensors = [ useSensor(PointerSensor) ];
 
+  const handleDragStart = (event) => {
+    const { active } = event;
+    const item = taskArray.find((task) => task.id === active.id);
+    if (item) {
+      setDraggedItem(item);
+    }
+  };
   const handleDragEnd = (event) => {
     const { active, over } = event;
 
@@ -207,6 +215,7 @@ const List = ({
       <DndContext
         sensors={sensors}
         collisionDetection={closestCorners}
+        onDragStart={handleDragStart}
         onDragEnd={handleDragEnd}
       >
         <TaskContainer ref={setTaskNodeRef}>
@@ -220,11 +229,23 @@ const List = ({
                 id={task.id}
                 listId={id}
                 title={task.title}
+                label={task.label}
                 removeTaskFromList={removeTaskFromList}
               />
             ))}
           </SortableContext>
         </TaskContainer>
+        <DragOverlay>
+          {draggedItem && (
+            <Task
+              id={draggedItem.id}
+              listId={id}
+              title={draggedItem.title}
+              label={draggedItem.label}
+              removeTaskFromList={removeTaskFromList}
+            />
+          )}
+        </DragOverlay>
       </DndContext>
       <AddTaskButton onClick={addTaskToList}>
         <AiOutlinePlus />

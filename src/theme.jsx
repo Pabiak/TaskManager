@@ -16,12 +16,15 @@ const theme = {
     white: '#FFFFFF',
     black: '#071122',
     red: '#e33030',
+    yellow: '#f1c40f',
+    green: '#2ecc71',
     hoverGray: '#52575c',
     gray: '#333B48',
     lightGray: '#b4b7bc',
     darkGray: '#333B48',
   },
   fontSizes: {
+    xs: '0.75rem', // 12px
     sm: '0.875rem', // 14px
     md: '1rem', // 16px
     lg: '1.25rem', // 20px

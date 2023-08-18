@@ -31,5 +31,12 @@
         "warning": "This action cannot be undone.",
         "confirm": "Confirm",
         "cancel": "Cancel"
+    },
+    "taskLabel": {
+        "message": "Add a label to this task",
+        "high": "High",
+        "medium": "Medium",
+        "low": "Low"
     }
+    
 }
