@@ -10,11 +10,15 @@ import { CSS } from '@dnd-kit/utilities';
 import PopupMenu from '../PopupMenu/popupMenu.component';
 import { UserAuth } from '../../context/authContext';
 import { database } from '../../firebase';
-import { TaskTitle, TaskContainer, EditTaskField, DragHandle } from './task.styles';
+import {
+  TaskTitle, TaskContainer, EditTaskField, DragHandle,
+} from './task.styles';
 import { EditIconsBox, ConfirmIcon, CancelIcon } from '../List/list.styles';
+import TaskLabel from '../TaskLabel/TaskLabel.component';
+import AddLabelModal from '../AddLabelModal/addLabelModal.component';
 
 const Task = ({
-  id, listId, title, removeTaskFromList,
+  id, listId, title, label, removeTaskFromList,
 }) => {
   const [ newTitle, setNewTitle ] = useState(title);
   const [ editClicked, setEditClicked ] = useState(false);
@@ -81,14 +85,43 @@ const Task = ({
     setNodeRef,
     transform,
     transition,
+    isDragging,
   } = useSortable({ id });
 
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
+    opacity: isDragging ? '0' : '1',
   };
+  const [ isAddLabelModalOpen, setIsAddLabelModalOpen ] = useState(false);
+  const toggleAddLabelModal = () => setIsAddLabelModalOpen(!isAddLabelModalOpen);
+
+  const confirmAddLabelAction = async (priority) => {
+    const taskToPutLabelOn = {
+      id,
+      title,
+      label: priority,
+    };
+    const listDoc = doc(database, `lists-${user?.uid}`, listId);
+    const docSnapshot = await getDoc(listDoc);
+    if (!docSnapshot.exists()) return;
+
+    const { tasks } = docSnapshot.data();
+    const index = tasks.findIndex((task) => task.id === taskToPutLabelOn.id);
+
+    if (index === -1) return;
+
+    tasks[index] = taskToPutLabelOn;
+    await updateDoc(listDoc, { tasks });
+  };
+
   return (
-    <TaskContainer ref={setNodeRef} style={style}>
+    <TaskContainer ref={setNodeRef} style={style} hasLabel={!!label}>
+      <AddLabelModal
+        open={isAddLabelModalOpen}
+        toggle={toggleAddLabelModal}
+        confirmAddLabelAction={confirmAddLabelAction}
+      />
       {editClicked ? (
         <EditTaskField
           type="textarea"
@@ -100,8 +133,13 @@ const Task = ({
         />
       ) : (
         <div>
-          <DragHandle {...attributes} {...listeners} />
-          <TaskTitle>{title}</TaskTitle>
+          {label && (
+            <TaskLabel priority={label} />
+          ) }
+          <div>
+            <DragHandle {...attributes} {...listeners} />
+            <TaskTitle>{title}</TaskTitle>
+          </div>
         </div>
       )}
       {editClicked ? (
@@ -120,7 +158,12 @@ const Task = ({
           </div>
         </EditIconsBox>
       ) : (
-        <PopupMenu id={`menuButton_${id}`} onEditClick={handleEditClicked} onDeleteClick={handleRemoveTask} />
+        <PopupMenu
+          id={`menuButton_${id}`}
+          onEditClick={handleEditClicked}
+          onDeleteClick={handleRemoveTask}
+          onAddLabelClick={toggleAddLabelModal}
+        />
       )}
       {editClicked && <Tooltip isOpen={confirmTooltipOpen} target={`confirmButton_${id}`} toggle={toggleConfirmTooltip} placement="top">{t('toolTip.confirm')}</Tooltip>}
       {editClicked && <Tooltip isOpen={cancelTooltipOpen} target={`cancelButton_${id}`} toggle={toggleCancelTooltip} placement="top">{t('toolTip.cancel')}</Tooltip>}
@@ -133,6 +176,7 @@ Task.propTypes = {
   id: PropTypes.string,
   listId: PropTypes.string,
   title: PropTypes.string,
+  label: PropTypes.string,
   removeTaskFromList: PropTypes.func,
 };
 
@@ -140,5 +184,6 @@ Task.defaultProps = {
   id: '',
   listId: '',
   title: '',
+  label: null,
   removeTaskFromList: () => {},
 };

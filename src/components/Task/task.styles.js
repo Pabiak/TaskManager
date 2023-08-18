@@ -19,16 +19,16 @@ export const TaskContainer = styled.div`
     justify-content: space-between;
     width: 14rem;
     height: fit-content;
-    padding: 16px;
+    padding: ${(props) => (props.hasLabel ? '0 16px 16px 16px' : '16px')};
     border-radius: 12px;
     background-color: ${({ theme }) => theme.colors.gray};
     flex-shrink: 0;
     cursor: pointer;
     transition: background-color .2s ease-in-out;
+
     &:hover {
         background-color: ${({ theme }) => addAlphaChannel(theme.colors.gray, 0.7)};
     }
-    /* z-index: 1999; */
 `;
 
 export const TaskTitle = styled.span`

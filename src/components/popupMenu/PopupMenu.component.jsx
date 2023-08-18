@@ -12,7 +12,7 @@ import {
   PopupMenuContainer, StyledDropdownItem, StyledDropdownMenu, StyledDropdownToggle,
 } from './popupMenu.styles';
 
-const PopupMenu = ({ id, onEditClick, onDeleteClick }) => {
+const PopupMenu = ({ id, onEditClick, onDeleteClick, onAddLabelClick }) => {
   const [ dropdownOpen, setDropdownOpen ] = useState(false);
   const [ menuTooltipOpen, setMenuTooltipOpen ] = useState(false);
   const { t } = useTranslation();
@@ -30,7 +30,7 @@ const PopupMenu = ({ id, onEditClick, onDeleteClick }) => {
           <BsThreeDots id={id} style={{ zIndex: '2000' }} />
         </StyledDropdownToggle>
         <StyledDropdownMenu>
-          <StyledDropdownItem disabled>
+          <StyledDropdownItem onClick={onAddLabelClick}>
             <BiSolidLabel />
             {t('popupMenu.addLabel')}
           </StyledDropdownItem>
@@ -54,11 +54,13 @@ export default PopupMenu;
 PopupMenu.propTypes = {
   onEditClick: PropTypes.func,
   onDeleteClick: PropTypes.func,
+  onAddLabelClick: PropTypes.func,
   id: PropTypes.string,
 };
 
 PopupMenu.defaultProps = {
   onEditClick: () => {},
   onDeleteClick: () => {},
+  onAddLabelClick: () => {},
   id: '',
 };

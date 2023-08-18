@@ -22,7 +22,6 @@ export const StyledDropdownToggle = styled(DropdownToggle)`
 
 export const StyledDropdownMenu = styled(DropdownMenu)`
     background-color: ${({ theme }) => theme.colors.gray};
-    
 `;
 
 export const StyledDropdownItem = styled(DropdownItem)`
