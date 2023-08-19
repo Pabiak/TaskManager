@@ -61,6 +61,7 @@ const List = ({
     const newTask = {
       id: crypto.randomUUID(),
       title: t('list.initialTaskTitle'),
+      label: null,
     };
 
     await updateDoc(listDoc, {
