@@ -53,7 +53,7 @@ const Task = ({
     const taskToEdit = {
       id,
       title: newTitle,
-      label,
+      label: label || null,
     };
 
     const docSnapshot = await getDoc(listDoc);
@@ -73,7 +73,7 @@ const Task = ({
     const taskToRemove = {
       id,
       title,
-      label,
+      label: label || null,
     };
     removeTaskFromList(listId, taskToRemove);
   };
