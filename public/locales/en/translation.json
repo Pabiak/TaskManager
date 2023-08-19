@@ -36,7 +36,8 @@
         "message": "Add a label to this task",
         "high": "High",
         "medium": "Medium",
-        "low": "Low"
+        "low": "Low",
+        "done": "Done"
     }
     
 }

@@ -13,6 +13,7 @@ const LabelContainer = styled.div`
       high: theme.colors.red,
       medium: theme.colors.yellow,
       low: theme.colors.green,
+      done: theme.colors.done,
     };
     return colors[priority];
   }};
