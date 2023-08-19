@@ -4,12 +4,14 @@ import PropTypes from 'prop-types';
 import {
   collection, getDocs, addDoc,
 } from 'firebase/firestore';
+import { useTranslation } from 'react-i18next';
+
 import ReactCountryFlag from 'react-country-flag';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { MdOutlineLogout } from 'react-icons/md';
-import { useTranslation } from 'react-i18next';
 import { database } from '../../firebase';
 import { UserAuth } from '../../context/authContext';
+
 import {
   NavBarContainer,
   UserInfo,

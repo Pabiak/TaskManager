@@ -1,5 +1,4 @@
 /* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable jsx-a11y/no-autofocus */
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { doc, updateDoc, getDoc } from 'firebase/firestore';
@@ -7,16 +6,18 @@ import { Tooltip } from 'reactstrap';
 import { useTranslation } from 'react-i18next';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import PopupMenu from '../PopupMenu/popupMenu.component';
+
 import { UserAuth } from '../../context/authContext';
 import { database } from '../../firebase';
+import PopupMenu from '../PopupMenu/popupMenu.component';
+import TaskLabel from '../TaskLabel/TaskLabel.component';
+import AddLabelModal from '../AddLabelModal/addLabelModal.component';
+import AddDeadlineModal from '../AddDeadlineModal/addDeadlineModal.component';
+
 import {
   TaskTitle, TaskContainer, EditTaskField, DragHandle, DeadlineText,
 } from './task.styles';
 import { EditIconsBox, ConfirmIcon, CancelIcon } from '../List/list.styles';
-import TaskLabel from '../TaskLabel/TaskLabel.component';
-import AddLabelModal from '../AddLabelModal/addLabelModal.component';
-import AddDeadlineModal from '../AddDeadlineModal/addDeadlineModal.component';
 
 const Task = ({
   id, listId, title, label, deadline, removeTaskFromList,
@@ -129,7 +130,6 @@ const Task = ({
   };
 
   const confirmAddDeadlineAction = async (deadlineDate) => {
-    console.log(deadlineDate);
     const taskToPutDeadlineOn = {
       id,
       title,

@@ -6,13 +6,13 @@ import React, {
   useMemo,
 } from 'react';
 import PropTypes from 'prop-types';
-
 import {
   GoogleAuthProvider,
   signInWithPopup,
   signOut,
   onAuthStateChanged,
 } from 'firebase/auth';
+
 import { auth } from '../firebase';
 
 const AuthContext = createContext();

@@ -4,6 +4,7 @@ import {
   Modal, Button,
 } from 'reactstrap';
 import { useTranslation } from 'react-i18next';
+
 import { ButtonContainer, Title, StyledModalBody } from './confirmDeleteModal.styles';
 
 const ConfirmDeleteModal = ({
