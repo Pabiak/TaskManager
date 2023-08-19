@@ -8,7 +8,9 @@ import React, {
 import PropTypes from 'prop-types';
 import {
   GoogleAuthProvider,
+  GithubAuthProvider,
   signInWithPopup,
+  signInAnonymously,
   signOut,
   onAuthStateChanged,
 } from 'firebase/auth';
@@ -20,8 +22,18 @@ const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const [ user, setUser ] = useState({});
   const [ loading, setLoading ] = useState(true);
+
   const signInWithGoogle = () => {
     const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider);
+  };
+
+  const signInAsAnonymous = () => {
+    signInAnonymously(auth);
+  };
+
+  const signInWithGithub = () => {
+    const provider = new GithubAuthProvider();
     signInWithPopup(auth, provider);
   };
 
@@ -41,11 +53,13 @@ export const AuthContextProvider = ({ children }) => {
   const providerValue = useMemo(
     () => ({
       signInWithGoogle,
+      signInAsAnonymous,
+      signInWithGithub,
       logOut,
       user,
       loading,
     }),
-    [ signInWithGoogle, logOut, user, loading ],
+    [ signInWithGoogle, signInAsAnonymous, signInWithGithub, logOut, user, loading ],
   );
 
   return (

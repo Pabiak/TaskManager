@@ -5,6 +5,7 @@ import {
 } from 'react-social-login-buttons';
 import ReactCountryFlag from 'react-country-flag';
 import { useTranslation } from 'react-i18next';
+import { FaUserSecret } from 'react-icons/fa';
 import { UserAuth } from '../../context/authContext';
 
 import {
@@ -14,14 +15,32 @@ import {
   LoginBox,
   Svg,
   FlagContainer,
+  AnonymousButton,
 } from './loginPage.styles';
 
 const LoginPage = () => {
   const { t, i18n } = useTranslation();
-  const { signInWithGoogle } = UserAuth();
+  const { signInWithGoogle, signInAsAnonymous, signInWithGithub } = UserAuth();
+
   const hangleGoogleLogin = async () => {
     try {
       await signInWithGoogle();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleGithubLogin = async () => {
+    try {
+      await signInWithGithub();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleAnonymouslyLogin = async () => {
+    try {
+      await signInAsAnonymous();
     } catch (error) {
       console.log(error);
     }
@@ -35,9 +54,13 @@ const LoginPage = () => {
           <GoogleLoginButton onClick={hangleGoogleLogin}>
             <span>{t('loginPage.signInWithGoogle')}</span>
           </GoogleLoginButton>
-          <GithubLoginButton onClick={hangleGoogleLogin}>
+          <GithubLoginButton onClick={handleGithubLogin}>
             <span>{t('loginPage.signInWithGithub')}</span>
           </GithubLoginButton>
+          <AnonymousButton onClick={handleAnonymouslyLogin}>
+            <FaUserSecret />
+            <span>{t('loginPage.signInAnonymously')}</span>
+          </AnonymousButton>
         </ButtonContainer>
         <FlagContainer>
           {i18n.language === 'en' ? <ReactCountryFlag countryCode="PL" svg onClick={() => i18n.changeLanguage('pl')} />

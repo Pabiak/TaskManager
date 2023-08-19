@@ -77,3 +77,31 @@ export const FlagContainer = styled.div`
     font-size: ${({ theme }) => theme.fontSizes.xl2};
     cursor: pointer;
 `;
+
+export const AnonymousButton = styled.button`
+    display: flex;
+    border: 0px;
+    border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.5) 0px 1px 2px;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    font-size: 19px;
+    margin: 5px;
+    width: calc(100% - 10px);
+    overflow: hidden;
+    padding: 0px 10px;
+    user-select: none;
+    height: 50px;
+    background: rgb(51, 51, 51);
+    align-items: center;
+    justify-content: flex-start;
+    gap: .6rem;
+    background-color: ${({ theme }) => theme.colors.gray};
+
+    svg {
+        font-size: ${({ theme }) => theme.fontSizes.xl};
+    }
+    &:hover {
+        background-color: ${({ theme }) => theme.colors.hoverGray};
+    };
+`;

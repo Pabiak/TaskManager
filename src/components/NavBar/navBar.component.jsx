@@ -52,7 +52,7 @@ const NavBar = () => {
       <LeftContainer>
         <UserInfo>
           <UserAvatar photoURL={user?.photoURL} />
-          <UserName>{user?.displayName}</UserName>
+          <UserName>{user?.displayName || t('navBar.anonymous')}</UserName>
         </UserInfo>
         <AddListButton onClick={addList}>
           <AiOutlinePlus />
