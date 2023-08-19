@@ -39,10 +39,26 @@ export const UserName = styled.span`
     padding-left: 0.5rem;
 `;
 
-export const AddListButton = styled(AddTaskButton)`
-    background-color: ${({ theme }) => theme.colors.secondary};
-    margin: 0;
+export const AddListButton = styled.button`
+    all: unset;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: ${({ theme }) => theme.colors.white};
+    font-size: ${({ theme }) => theme.fontSizes.md};
+    font-family: ${({ theme }) => theme.fontFamilies.primary};
+    font-weight: ${({ theme }) => theme.fontWeights.light};
+    cursor: pointer;
+    background-color: ${({ theme }) => theme.colors.primary};
+    padding: 0.5rem 1rem 0.5rem 0.5rem;
+    border-radius: ${({ theme }) => theme.borderRadius};
     align-self: center;
+    min-width: 7rem;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+        background-color: ${({ theme }) => theme.colors.secondary};
+    }
 `;
 
 export const LogOut = styled.div`

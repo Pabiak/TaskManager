@@ -11,7 +11,7 @@ export const ListContainer = styled.div`
     width: 16rem;
     height: fit-content;
     padding: 1rem;
-    border-radius: 12px;
+    border-radius: ${({ theme }) => theme.borderRadius};
     background-color: ${({ theme }) => theme.colors.black};
 `;
 export const ListTitle = styled.span`
@@ -64,7 +64,7 @@ export const AddTaskButton = styled.button`
     cursor: pointer;
     background-color: ${({ theme }) => theme.colors.primary};
     padding: 0.5rem 1rem 0.5rem 0.5rem;
-    border-radius: 12px;
+    border-radius: ${({ theme }) => theme.borderRadius};
     margin-top: 1rem;
     align-self: flex-start;
     min-width: 7rem;

@@ -42,6 +42,8 @@ const theme = {
   fontFamilies: {
     primary: "'Roboto', sans-serif",
   },
+
+  borderRadius: '10px',
 };
 
 const Theme = ({ children }) => (
