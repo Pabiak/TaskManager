@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import {
   GoogleAuthProvider,
   signInWithPopup,
+  signInAnonymously,
   signOut,
   onAuthStateChanged,
 } from 'firebase/auth';
@@ -20,9 +21,14 @@ const AuthContext = createContext();
 export const AuthContextProvider = ({ children }) => {
   const [ user, setUser ] = useState({});
   const [ loading, setLoading ] = useState(true);
+
   const signInWithGoogle = () => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider);
+  };
+
+  const signInAsAnonymous = () => {
+    signInAnonymously(auth);
   };
 
   const logOut = () => {
@@ -41,11 +47,12 @@ export const AuthContextProvider = ({ children }) => {
   const providerValue = useMemo(
     () => ({
       signInWithGoogle,
+      signInAsAnonymous,
       logOut,
       user,
       loading,
     }),
-    [ signInWithGoogle, logOut, user, loading ],
+    [ signInWithGoogle, signInAsAnonymous, logOut, user, loading ],
   );
 
   return (

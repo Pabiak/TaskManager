@@ -2,12 +2,14 @@
     "loginPage": {
         "signIn": "Zaloguj się",
         "signInWithGoogle": "Zaloguj się przez Google",
-        "signInWithGithub": "Zaloguj się przez Github"
+        "signInWithGithub": "Zaloguj się przez Github",
+        "signInAnonymously": "Zaloguj się anonimowo"
     },
     "navBar": {
         "logout": "Wyloguj się",
         "addList": "Dodaj listę",
-        "initialListTitle": "Lista"
+        "initialListTitle": "Lista",
+        "anonymous": "Anonim"
     },
     "list": {
         "initialTaskTitle": "Nowe zadanie",
