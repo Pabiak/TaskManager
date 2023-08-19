@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { BsFillMoonFill } from 'react-icons/bs';
-import { AddTaskButton } from '../List/list.styles';
 
 export const NavBarContainer = styled.div`
     display: flex;
@@ -97,6 +96,12 @@ export const LeftContainer = styled.div`
     align-items: center;
     justify-content: center;
     gap: 1rem;
+
+    @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+        margin-top: 1rem;
+        width: 100%;
+        justify-content: space-between;
+    }
 `;
 
 export const RightContainer = styled.div`
@@ -106,6 +111,12 @@ export const RightContainer = styled.div`
     padding: 0;
     margin: 0;
     gap: 1rem;
+
+    @media screen and (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+        margin-top: 1rem;
+        width: 100%;
+        justify-content: flex-end;
+    }
 `;
 
 export const NightModeIcon = styled(BsFillMoonFill)`

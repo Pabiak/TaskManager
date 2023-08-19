@@ -27,6 +27,10 @@ export const LoginContainer = styled.div`
     align-items: center;
     justify-content: center;
     height: 100vh;
+
+    @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
+        margin: 0 1rem;
+    }
 `;
 
 export const LoginBox = styled.div`
@@ -55,6 +59,12 @@ export const ButtonContainer = styled.div`
     width: 100%;
     height: fit-content;
     gap: 1rem;
+
+    span {
+        @media screen and (max-width: ${({ theme }) => theme.breakpoints.md}) {
+            font-size: ${({ theme }) => theme.fontSizes.md};
+        }
+    }
 `;
 
 export const FlagContainer = styled.div`
