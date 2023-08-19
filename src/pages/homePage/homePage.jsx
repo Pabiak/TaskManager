@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  collection, getDocs, query, doc, updateDoc, orderBy,
+  collection, onSnapshot, query, doc, updateDoc, orderBy,
 } from 'firebase/firestore';
 
 import {
@@ -23,19 +23,22 @@ const HomePage = () => {
   const [ isLoading, setIsLoading ] = useState(true);
   const { user } = UserAuth();
 
-  const getTasks = async () => {
+  const getTasks = () => {
     setIsLoading(true);
     const dbQuery = query(collection(database, `lists-${user?.uid}`), orderBy('order', 'asc'));
-    const snapshot = await getDocs(dbQuery);
-    setListsFromDB(snapshot.docs.map((document) => ({
-      id: document.id,
-      ...document.data(),
-    })));
-    setIsLoading(false);
+    const unsubscribe = onSnapshot(dbQuery, (snapshot) => {
+      setListsFromDB(snapshot.docs.map((document) => ({
+        id: document.id,
+        ...document.data(),
+      })));
+      setIsLoading(false);
+    });
+    return unsubscribe;
   };
 
   useEffect(() => {
-    getTasks();
+    const unsubscribe = getTasks();
+    return () => unsubscribe();
   }, []);
 
   const { setListNodeRef } = useDroppable({
