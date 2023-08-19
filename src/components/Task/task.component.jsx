@@ -53,6 +53,7 @@ const Task = ({
     const taskToEdit = {
       id,
       title: newTitle,
+      label,
     };
 
     const docSnapshot = await getDoc(listDoc);
@@ -72,6 +73,7 @@ const Task = ({
     const taskToRemove = {
       id,
       title,
+      label,
     };
     removeTaskFromList(listId, taskToRemove);
   };
@@ -112,11 +114,16 @@ const Task = ({
     if (index === -1) return;
 
     tasks[index] = taskToPutLabelOn;
+
+    if (priority === 'done') {
+      tasks.push(tasks.splice(index, 1)[0]);
+    }
+
     await updateDoc(listDoc, { tasks });
   };
 
   return (
-    <TaskContainer ref={setNodeRef} style={style} hasLabel={!!label}>
+    <TaskContainer ref={setNodeRef} style={style} hasLabel={!!label} editClicked={editClicked}>
       <AddLabelModal
         open={isAddLabelModalOpen}
         toggle={toggleAddLabelModal}

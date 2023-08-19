@@ -30,6 +30,7 @@ export const StyledButton = styled.button`
       high: theme.colors.red,
       medium: theme.colors.yellow,
       low: theme.colors.green,
+      done: theme.colors.done,
     };
     return colors[priority];
   }};

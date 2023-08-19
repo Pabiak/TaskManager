@@ -28,6 +28,9 @@ const AddLabelModal = ({
           <StyledButton type="submit" onClick={() => confirmButtonClick('low')} priority="low">
             {t('taskLabel.low')}
           </StyledButton>
+          <StyledButton type="submit" onClick={() => confirmButtonClick('done')} priority="done">
+            {t('taskLabel.done')}
+          </StyledButton>
         </ButtonContainer>
       </StyledModalBody>
     </Modal>

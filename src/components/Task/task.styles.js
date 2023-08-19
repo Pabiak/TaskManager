@@ -19,7 +19,7 @@ export const TaskContainer = styled.div`
     justify-content: space-between;
     width: 14rem;
     height: fit-content;
-    padding: ${(props) => (props.hasLabel ? '0 16px 16px 16px' : '16px')};
+    padding: ${(props) => (props.hasLabel && !props.editClicked ? '0 16px 16px 16px' : '16px')};
     border-radius: 12px;
     background-color: ${({ theme }) => theme.colors.gray};
     flex-shrink: 0;

@@ -18,6 +18,7 @@ const theme = {
     red: '#e33030',
     yellow: '#f1c40f',
     green: '#2ecc71',
+    done: '#952ed0',
     hoverGray: '#52575c',
     gray: '#333B48',
     lightGray: '#b4b7bc',

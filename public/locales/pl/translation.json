@@ -36,6 +36,7 @@
         "message": "Dodaj etykietę do zadania",
         "high": "Wysoki",
         "medium": "Średni",
-        "low": "Niski"
+        "low": "Niski",
+        "done": "Zrobione"
     }
 }

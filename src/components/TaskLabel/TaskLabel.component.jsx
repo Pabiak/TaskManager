@@ -15,7 +15,7 @@ const TaskLabel = ({ priority }) => {
 export default TaskLabel;
 
 TaskLabel.propTypes = {
-  priority: PropTypes.oneOf([ 'high', 'medium', 'low' ]),
+  priority: PropTypes.oneOf([ 'high', 'medium', 'low', 'done' ]),
 };
 
 TaskLabel.defaultProps = {
