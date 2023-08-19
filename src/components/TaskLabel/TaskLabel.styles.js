@@ -17,7 +17,7 @@ const LabelContainer = styled.div`
     };
     return colors[priority];
   }};
-    border-radius: 6px;
+    border-radius: 4px;
     padding: 0 8px;
     margin-top: 0.5rem;
     font-size: ${({ theme }) => theme.fontSizes.xs};

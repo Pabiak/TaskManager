@@ -20,7 +20,7 @@ export const TaskContainer = styled.div`
     width: 14rem;
     height: fit-content;
     padding: ${(props) => (props.hasLabel && !props.editClicked ? '0 16px 16px 16px' : '16px')};
-    border-radius: 12px;
+    border-radius: ${({ theme }) => theme.borderRadius};
     background-color: ${({ theme }) => theme.colors.gray};
     flex-shrink: 0;
     cursor: pointer;
