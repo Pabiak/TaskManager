@@ -62,6 +62,7 @@ const List = ({
       id: crypto.randomUUID(),
       title: t('list.initialTaskTitle'),
       label: null,
+      deadline: null,
     };
 
     await updateDoc(listDoc, {
@@ -231,6 +232,7 @@ const List = ({
                 listId={id}
                 title={task.title}
                 label={task.label}
+                deadline={task.deadline}
                 removeTaskFromList={removeTaskFromList}
               />
             ))}
@@ -243,6 +245,7 @@ const List = ({
               listId={id}
               title={draggedItem.title}
               label={draggedItem.label}
+              deadline={draggedItem.deadline}
               removeTaskFromList={removeTaskFromList}
             />
           )}

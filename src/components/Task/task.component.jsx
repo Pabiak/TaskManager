@@ -11,14 +11,15 @@ import PopupMenu from '../PopupMenu/popupMenu.component';
 import { UserAuth } from '../../context/authContext';
 import { database } from '../../firebase';
 import {
-  TaskTitle, TaskContainer, EditTaskField, DragHandle,
+  TaskTitle, TaskContainer, EditTaskField, DragHandle, DeadlineText,
 } from './task.styles';
 import { EditIconsBox, ConfirmIcon, CancelIcon } from '../List/list.styles';
 import TaskLabel from '../TaskLabel/TaskLabel.component';
 import AddLabelModal from '../AddLabelModal/addLabelModal.component';
+import AddDeadlineModal from '../AddDeadlineModal/addDeadlineModal.component';
 
 const Task = ({
-  id, listId, title, label, removeTaskFromList,
+  id, listId, title, label, deadline, removeTaskFromList,
 }) => {
   const [ newTitle, setNewTitle ] = useState(title);
   const [ editClicked, setEditClicked ] = useState(false);
@@ -54,6 +55,7 @@ const Task = ({
       id,
       title: newTitle,
       label: label || null,
+      deadline: deadline || null,
     };
 
     const docSnapshot = await getDoc(listDoc);
@@ -74,6 +76,7 @@ const Task = ({
       id,
       title,
       label: label || null,
+      deadline: deadline || null,
     };
     removeTaskFromList(listId, taskToRemove);
   };
@@ -96,13 +99,16 @@ const Task = ({
     opacity: isDragging ? '0' : '1',
   };
   const [ isAddLabelModalOpen, setIsAddLabelModalOpen ] = useState(false);
+  const [ isDeadlineModalOpen, setIsDeadlineModalOpen ] = useState(false);
   const toggleAddLabelModal = () => setIsAddLabelModalOpen(!isAddLabelModalOpen);
+  const toggleDeadlineModal = () => setIsDeadlineModalOpen(!isDeadlineModalOpen);
 
   const confirmAddLabelAction = async (priority) => {
     const taskToPutLabelOn = {
       id,
       title,
       label: priority,
+      deadline,
     };
     const listDoc = doc(database, `lists-${user?.uid}`, listId);
     const docSnapshot = await getDoc(listDoc);
@@ -122,21 +128,45 @@ const Task = ({
     await updateDoc(listDoc, { tasks });
   };
 
+  const confirmAddDeadlineAction = async (deadlineDate) => {
+    console.log(deadlineDate);
+    const taskToPutDeadlineOn = {
+      id,
+      title,
+      label,
+      deadline: deadlineDate,
+    };
+    const listDoc = doc(database, `lists-${user?.uid}`, listId);
+    const docSnapshot = await getDoc(listDoc);
+    if (!docSnapshot.exists()) return;
+
+    const { tasks } = docSnapshot.data();
+    const index = tasks.findIndex((task) => task.id === taskToPutDeadlineOn.id);
+
+    if (index === -1) return;
+
+    tasks[index] = taskToPutDeadlineOn;
+
+    await updateDoc(listDoc, { tasks });
+  };
+
   return (
-    <TaskContainer ref={setNodeRef} style={style} hasLabel={!!label} editClicked={editClicked}>
+    <TaskContainer ref={setNodeRef} style={style} hasLabel={!!label} hasDeadline={!!deadline} editClicked={editClicked}>
       <AddLabelModal
         open={isAddLabelModalOpen}
         toggle={toggleAddLabelModal}
         confirmAddLabelAction={confirmAddLabelAction}
+      />
+      <AddDeadlineModal
+        open={isDeadlineModalOpen}
+        toggle={toggleDeadlineModal}
+        confirmAddDeadlineAction={confirmAddDeadlineAction}
       />
       {editClicked ? (
         <EditTaskField
           type="textarea"
           value={newTitle}
           onChange={(e) => handleTitleChange(e)}
-          // onBlur={handleConfirm}
-          // autoFocus
-          // todo: wymyslic sposob na to zeby dalo się mieć włączony tylko jeden input
         />
       ) : (
         <div>
@@ -147,6 +177,11 @@ const Task = ({
             <DragHandle {...attributes} {...listeners} />
             <TaskTitle>{title}</TaskTitle>
           </div>
+          {deadline && (
+            <div>
+              <DeadlineText>{deadline}</DeadlineText>
+            </div>
+          )}
         </div>
       )}
       {editClicked ? (
@@ -170,6 +205,7 @@ const Task = ({
           onEditClick={handleEditClicked}
           onDeleteClick={handleRemoveTask}
           onAddLabelClick={toggleAddLabelModal}
+          onAddDeadlineClick={toggleDeadlineModal}
         />
       )}
       {editClicked && <Tooltip isOpen={confirmTooltipOpen} target={`confirmButton_${id}`} toggle={toggleConfirmTooltip} placement="top">{t('toolTip.confirm')}</Tooltip>}
@@ -184,6 +220,7 @@ Task.propTypes = {
   listId: PropTypes.string,
   title: PropTypes.string,
   label: PropTypes.string,
+  deadline: PropTypes.string,
   removeTaskFromList: PropTypes.func,
 };
 
@@ -192,5 +229,6 @@ Task.defaultProps = {
   listId: '',
   title: '',
   label: null,
+  deadline: '',
   removeTaskFromList: () => {},
 };

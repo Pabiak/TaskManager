@@ -24,13 +24,17 @@
     "popupMenu": {
         "edit": "Edit",
         "delete": "Delete",
-        "addLabel": "Add Label"
+        "addLabel": "Add label",
+        "addDeadline": "Add deadline"
     },
     "confirmDeleteModal": {
         "title": "Are you sure you want to delete this list:",
         "warning": "This action cannot be undone.",
         "confirm": "Confirm",
         "cancel": "Cancel"
+    },
+    "addDeadlineModal": {
+        "message": "Add a label to this task"
     },
     "taskLabel": {
         "message": "Add a label to this task",
@@ -39,5 +43,4 @@
         "low": "Low",
         "done": "Done"
     }
-    
 }

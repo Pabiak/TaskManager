@@ -7,12 +7,12 @@ import {
 
 import { useTranslation } from 'react-i18next';
 import { BiSolidLabel } from 'react-icons/bi';
-import { BsThreeDots, BsPencilFill, BsFillTrashFill } from 'react-icons/bs';
+import { BsThreeDots, BsPencilFill, BsFillTrashFill, BsClockFill } from 'react-icons/bs';
 import {
   PopupMenuContainer, StyledDropdownItem, StyledDropdownMenu, StyledDropdownToggle,
 } from './popupMenu.styles';
 
-const PopupMenu = ({ id, onEditClick, onDeleteClick, onAddLabelClick }) => {
+const PopupMenu = ({ id, onEditClick, onDeleteClick, onAddLabelClick, onAddDeadlineClick }) => {
   const [ dropdownOpen, setDropdownOpen ] = useState(false);
   const [ menuTooltipOpen, setMenuTooltipOpen ] = useState(false);
   const { t } = useTranslation();
@@ -33,6 +33,10 @@ const PopupMenu = ({ id, onEditClick, onDeleteClick, onAddLabelClick }) => {
           <StyledDropdownItem onClick={onAddLabelClick}>
             <BiSolidLabel />
             {t('popupMenu.addLabel')}
+          </StyledDropdownItem>
+          <StyledDropdownItem onClick={onAddDeadlineClick}>
+            <BsClockFill />
+            {t('popupMenu.addDeadline')}
           </StyledDropdownItem>
           <StyledDropdownItem onClick={onEditClick}>
             <BsPencilFill />
@@ -55,6 +59,7 @@ PopupMenu.propTypes = {
   onEditClick: PropTypes.func,
   onDeleteClick: PropTypes.func,
   onAddLabelClick: PropTypes.func,
+  onAddDeadlineClick: PropTypes.func,
   id: PropTypes.string,
 };
 
@@ -62,5 +67,6 @@ PopupMenu.defaultProps = {
   onEditClick: () => {},
   onDeleteClick: () => {},
   onAddLabelClick: () => {},
+  onAddDeadlineClick: () => {},
   id: '',
 };
