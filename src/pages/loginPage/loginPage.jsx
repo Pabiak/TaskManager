@@ -20,10 +20,19 @@ import {
 
 const LoginPage = () => {
   const { t, i18n } = useTranslation();
-  const { signInWithGoogle, signInAsAnonymous } = UserAuth();
+  const { signInWithGoogle, signInAsAnonymous, signInWithGithub } = UserAuth();
+
   const hangleGoogleLogin = async () => {
     try {
       await signInWithGoogle();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleGithubLogin = async () => {
+    try {
+      await signInWithGithub();
     } catch (error) {
       console.log(error);
     }
@@ -45,7 +54,7 @@ const LoginPage = () => {
           <GoogleLoginButton onClick={hangleGoogleLogin}>
             <span>{t('loginPage.signInWithGoogle')}</span>
           </GoogleLoginButton>
-          <GithubLoginButton onClick={handleAnonymouslyLogin}>
+          <GithubLoginButton onClick={handleGithubLogin}>
             <span>{t('loginPage.signInWithGithub')}</span>
           </GithubLoginButton>
           <AnonymousButton onClick={handleAnonymouslyLogin}>

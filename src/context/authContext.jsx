@@ -8,6 +8,7 @@ import React, {
 import PropTypes from 'prop-types';
 import {
   GoogleAuthProvider,
+  GithubAuthProvider,
   signInWithPopup,
   signInAnonymously,
   signOut,
@@ -31,6 +32,11 @@ export const AuthContextProvider = ({ children }) => {
     signInAnonymously(auth);
   };
 
+  const signInWithGithub = () => {
+    const provider = new GithubAuthProvider();
+    signInWithPopup(auth, provider);
+  };
+
   const logOut = () => {
     signOut(auth);
   };
@@ -48,11 +54,12 @@ export const AuthContextProvider = ({ children }) => {
     () => ({
       signInWithGoogle,
       signInAsAnonymous,
+      signInWithGithub,
       logOut,
       user,
       loading,
     }),
-    [ signInWithGoogle, signInAsAnonymous, logOut, user, loading ],
+    [ signInWithGoogle, signInAsAnonymous, signInWithGithub, logOut, user, loading ],
   );
 
   return (
