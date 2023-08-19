@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  collection, onSnapshot, query, doc, updateDoc, orderBy,
+  collection, getDocs, query, doc, updateDoc, orderBy,
 } from 'firebase/firestore';
 
 import {
@@ -20,18 +20,17 @@ import ListBox from './homePage.styles';
 
 const HomePage = () => {
   const [ listsFromDB, setListsFromDB ] = useState([]);
-  const [ isLoading, setIsLoading ] = useState(false);
+  const [ isLoading, setIsLoading ] = useState(true);
   const { user } = UserAuth();
 
   const getTasks = async () => {
     setIsLoading(true);
     const dbQuery = query(collection(database, `lists-${user?.uid}`), orderBy('order', 'asc'));
-    onSnapshot(dbQuery, (snapshot) => {
-      setListsFromDB(snapshot.docs.map((document) => ({
-        id: document.id,
-        ...document.data(),
-      })));
-    });
+    const snapshot = await getDocs(dbQuery);
+    setListsFromDB(snapshot.docs.map((document) => ({
+      id: document.id,
+      ...document.data(),
+    })));
     setIsLoading(false);
   };
 
