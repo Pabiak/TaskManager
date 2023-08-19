@@ -3,22 +3,36 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import {
-  DndContext, PointerSensor, closestCorners, useSensor,
-  useDroppable, DragOverlay,
+  DndContext,
+  PointerSensor,
+  closestCorners,
+  useSensor,
+  useDroppable,
+  DragOverlay,
 } from '@dnd-kit/core';
-import { useTranslation } from 'react-i18next';
-import { AiOutlinePlus } from 'react-icons/ai';
 import {
-  doc, updateDoc, arrayRemove, arrayUnion, deleteDoc,
-} from 'firebase/firestore';
-import { Tooltip } from 'reactstrap';
-import {
-  SortableContext, verticalListSortingStrategy, arrayMove, useSortable,
+  SortableContext,
+  verticalListSortingStrategy,
+  arrayMove,
+  useSortable,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { useTranslation } from 'react-i18next';
+import { Tooltip } from 'reactstrap';
+import {
+  doc,
+  updateDoc,
+  arrayRemove,
+  arrayUnion,
+  deleteDoc,
+} from 'firebase/firestore';
+
+import { AiOutlinePlus } from 'react-icons/ai';
 import { database } from '../../firebase';
 import { UserAuth } from '../../context/authContext';
 import Task from '../Task/task.component';
+import ConfirmDeleteModal from '../ConfirmDeleteModal/confirmDeleteModal.component';
+
 import {
   ListContainer,
   ListUpperBar,
@@ -34,11 +48,8 @@ import {
   EditIcon,
   DragHandle,
 } from './list.styles';
-import ConfirmDeleteModal from '../ConfirmDeleteModal/confirmDeleteModal.component';
 
-const List = ({
-  id, title, tasks,
-}) => {
+const List = ({ id, title, tasks }) => {
   const [ editClicked, setEditClicked ] = useState(false);
   const [ newTitle, setNewTitle ] = useState(title);
   const [ isConfirmTooltipOpen, setIsConfirmTooltipOpen ] = useState(false);
@@ -49,7 +60,9 @@ const List = ({
   const [ draggedItem, setDraggedItem ] = useState(null);
   const { user } = UserAuth();
   const { t } = useTranslation();
-  const [ taskArray, setTaskArray ] = useState(JSON.parse(JSON.stringify(tasks)));
+  const [ taskArray, setTaskArray ] = useState(
+    JSON.parse(JSON.stringify(tasks)),
+  );
 
   useEffect(() => {
     setTaskArray(JSON.parse(JSON.stringify(tasks)));
@@ -138,8 +151,12 @@ const List = ({
 
     if (active.id !== over.id) {
       setTaskArray((prevTasks) => {
-        const oldIndex = prevTasks.findIndex((task) => task.id === active.id);
-        const newIndex = prevTasks.findIndex((task) => task.id === over.id);
+        const oldIndex = prevTasks.findIndex(
+          (task) => task.id === active.id,
+        );
+        const newIndex = prevTasks.findIndex(
+          (task) => task.id === over.id,
+        );
         return arrayMove(prevTasks, oldIndex, newIndex);
       });
     }
@@ -177,9 +194,6 @@ const List = ({
             type="textarea"
             value={newTitle}
             onChange={(e) => handleTitleChange(e)}
-            // onBlur={() => setEditClicked(false)}
-            // autoFocus
-            // todo: wymyslic sposob na to zeby dalo się mieć włączony tylko jeden input
           />
         ) : (
           <>
@@ -201,16 +215,56 @@ const List = ({
               onClick={handleCancel}
               style={{ zIndex: '2000' }}
             />
-            {editClicked && <Tooltip isOpen={isConfirmTooltipOpen} target={`confirmButton_${id}`} toggle={toggleConfirmTooltip} placement="top">{t('toolTip.confirm')}</Tooltip>}
-            {editClicked && <Tooltip isOpen={isCancelTooltipOpen} target={`cancelButton_${id}`} toggle={toggleCancelTooltip} placement="top">{t('toolTip.cancel')}</Tooltip>}
+            {editClicked && (
+              <Tooltip
+                isOpen={isConfirmTooltipOpen}
+                target={`confirmButton_${id}`}
+                toggle={toggleConfirmTooltip}
+                placement="top"
+              >
+                {t('toolTip.confirm')}
+              </Tooltip>
+            )}
+            {editClicked && (
+              <Tooltip
+                isOpen={isCancelTooltipOpen}
+                target={`cancelButton_${id}`}
+                toggle={toggleCancelTooltip}
+                placement="top"
+              >
+                {t('toolTip.cancel')}
+              </Tooltip>
+            )}
           </EditIconsBox>
         ) : (
           <MenuIconsBox>
             {/* zindex needed to prevent tooltip flickering */}
-            <EditIcon id={`editButton_${id}`} onClick={() => setEditClicked(!editClicked)} style={{ zIndex: '2000' }} />
-            <DeleteIcon id={`deleteButton_${id}`} onClick={toggleConfirmDeleteModal} style={{ zIndex: '2000' }} />
-            <Tooltip isOpen={isEditTooltipOpen} target={`editButton_${id}`} toggle={toggleEditTooltip} placement="top">{t('toolTip.editList')}</Tooltip>
-            <Tooltip isOpen={isDeleteTooltipOpen} target={`deleteButton_${id}`} toggle={toggleDeleteTooltip} placement="top">{t('toolTip.deleteList')}</Tooltip>
+            <EditIcon
+              id={`editButton_${id}`}
+              onClick={() => setEditClicked(!editClicked)}
+              style={{ zIndex: '2000' }}
+            />
+            <DeleteIcon
+              id={`deleteButton_${id}`}
+              onClick={toggleConfirmDeleteModal}
+              style={{ zIndex: '2000' }}
+            />
+            <Tooltip
+              isOpen={isEditTooltipOpen}
+              target={`editButton_${id}`}
+              toggle={toggleEditTooltip}
+              placement="top"
+            >
+              {t('toolTip.editList')}
+            </Tooltip>
+            <Tooltip
+              isOpen={isDeleteTooltipOpen}
+              target={`deleteButton_${id}`}
+              toggle={toggleDeleteTooltip}
+              placement="top"
+            >
+              {t('toolTip.deleteList')}
+            </Tooltip>
           </MenuIconsBox>
         )}
       </ListUpperBar>

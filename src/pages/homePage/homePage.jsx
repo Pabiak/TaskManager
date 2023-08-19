@@ -2,17 +2,20 @@ import React, { useState, useEffect } from 'react';
 import {
   collection, onSnapshot, query, doc, updateDoc, orderBy,
 } from 'firebase/firestore';
-import { Spinner } from 'reactstrap';
+
 import {
   DndContext, PointerSensor, closestCorners, useDroppable, useSensor, DragOverlay,
 } from '@dnd-kit/core';
 import {
   SortableContext, horizontalListSortingStrategy, arrayMove,
 } from '@dnd-kit/sortable';
+
 import NavBar from '../../components/NavBar/navBar.component';
 import List from '../../components/List/list.component';
+import Spinner from '../../components/Spinner/spinner.component';
 import { database } from '../../firebase';
 import { UserAuth } from '../../context/authContext';
+
 import ListBox from './homePage.styles';
 
 const HomePage = () => {
@@ -72,6 +75,7 @@ const HomePage = () => {
       await updateDoc(listRef, { order: index + 1 });
     });
   }, [ listsFromDB ]);
+
   return (
     <>
       {isLoading && <Spinner />}

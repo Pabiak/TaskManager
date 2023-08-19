@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import {
-  Modal, Button, Input,
-} from 'reactstrap';
+import { Modal, Button } from 'reactstrap';
 import { useTranslation } from 'react-i18next';
-import { ButtonContainer, StyledModalBody, CalendarContainer, DateInput } from './addDeadlineModal.styles';
+
+import {
+  ButtonContainer, StyledModalBody, CalendarContainer, DateInput,
+} from './addDeadlineModal.styles';
 
 const AddDeadlineModal = ({
   open, toggle, confirmAddDeadlineAction,

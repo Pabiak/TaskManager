@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Modal } from 'reactstrap';
 import { useTranslation } from 'react-i18next';
+
 import { ButtonContainer, StyledButton, StyledModalBody } from './addLabelModal.styles';
 
 const AddLabelModal = ({
