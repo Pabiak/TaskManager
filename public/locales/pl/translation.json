@@ -24,13 +24,17 @@
     "popupMenu": {
         "edit": "Edytuj",
         "delete": "Usuń",
-        "addLabel": "Dodaj etykietę"
+        "addLabel": "Dodaj etykietę",
+        "addDeadline": "Dodaj deadline"
     },
     "confirmDeleteModal": {
-        "title": "Czy na pewno chcesz usunąć listę",
+        "title": "Czy na pewno chcesz usunąć listę:",
         "warning": "Ta operacja jest nieodwracalna!",
         "confirm": "Potwierdź",
         "cancel": "Anuluj"
+    },
+    "addDeadlineModal": {
+        "message": "Dodaj deadline do zadania"
     },
     "taskLabel": {
         "message": "Dodaj etykietę do zadania",

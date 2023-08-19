@@ -12,6 +12,22 @@ const addAlphaChannel = (color, alpha) => {
   return `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${alpha})`;
 };
 
+const getPadding = (props) => {
+  if (props.hasLabel && props.hasDeadline && !props.editClicked) {
+    return '0 16px 4px 16px';
+  }
+
+  if (props.hasLabel && !props.editClicked) {
+    return '0 16px 16px 16px';
+  }
+
+  if (props.hasDeadline && !props.editClicked) {
+    return '16px 16px 4px 16px';
+  }
+
+  return '16px';
+};
+
 export const TaskContainer = styled.div`
     display: flex;
     flex-direction: row;
@@ -19,7 +35,7 @@ export const TaskContainer = styled.div`
     justify-content: space-between;
     width: 14rem;
     height: fit-content;
-    padding: ${(props) => (props.hasLabel && !props.editClicked ? '0 16px 16px 16px' : '16px')};
+    padding: ${(props) => getPadding(props)};
     border-radius: ${({ theme }) => theme.borderRadius};
     background-color: ${({ theme }) => theme.colors.gray};
     flex-shrink: 0;
@@ -39,6 +55,16 @@ export const TaskTitle = styled.span`
     align-self: flex-start;
     padding-left: .5rem;
     z-index: 1999;
+`;
+
+export const DeadlineText = styled.span`
+    display: block;
+    margin-top: .5rem;
+    font-size: ${({ theme }) => theme.fontSizes.xxs};
+    font-weight: ${({ theme }) => theme.fontWeights.normal};
+    color: ${({ theme }) => theme.colors.lightGray};
+    font-family: ${({ theme }) => theme.fontFamilies.primary};
+    align-self: flex-start;
 `;
 
 export const TaskUpperBar = styled.div`
