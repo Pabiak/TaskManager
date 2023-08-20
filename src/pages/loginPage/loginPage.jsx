@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   GoogleLoginButton,
   GithubLoginButton,
@@ -17,16 +17,22 @@ import {
   FlagContainer,
   AnonymousButton,
 } from './loginPage.styles';
+import Spinner from '../../components/Spinner/spinner.component';
 
 const LoginPage = () => {
   const { t, i18n } = useTranslation();
-  const { signInWithGoogle, signInAsAnonymous, signInWithGithub } = UserAuth();
+  const [ loading, setLoading ] = useState(false);
+  const {
+    signInWithGoogle, signInAsAnonymous, signInWithGithub,
+  } = UserAuth();
 
   const hangleGoogleLogin = async () => {
     try {
       await signInWithGoogle();
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -40,7 +46,9 @@ const LoginPage = () => {
 
   const handleAnonymouslyLogin = async () => {
     try {
+      setLoading(true);
       await signInAsAnonymous();
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -60,6 +68,7 @@ const LoginPage = () => {
           <AnonymousButton onClick={handleAnonymouslyLogin}>
             <FaUserSecret />
             <span>{t('loginPage.signInAnonymously')}</span>
+            {loading && <Spinner small />}
           </AnonymousButton>
         </ButtonContainer>
         <FlagContainer>
