@@ -28,9 +28,7 @@ export const AuthContextProvider = ({ children }) => {
     signInWithPopup(auth, provider);
   };
 
-  const signInAsAnonymous = () => {
-    signInAnonymously(auth);
-  };
+  const signInAsAnonymous = async () => signInAnonymously(auth);
 
   const signInWithGithub = () => {
     const provider = new GithubAuthProvider();
@@ -42,12 +40,15 @@ export const AuthContextProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    setLoading(true);
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setLoading(true);
       setUser(currentUser);
       setLoading(false);
     });
-    return unsubscribe;
+
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   const providerValue = useMemo(
