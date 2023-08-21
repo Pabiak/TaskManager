@@ -102,6 +102,10 @@ const List = ({ id, title, tasks }) => {
     await deleteDoc(listDoc);
   };
 
+  const handleEditClicked = () => {
+    setEditClicked(!editClicked);
+  };
+
   const handleTitleChange = (e) => {
     setNewTitle(e.target.value);
   };
@@ -193,11 +197,12 @@ const List = ({ id, title, tasks }) => {
             type="textarea"
             value={newTitle}
             onChange={(e) => handleTitleChange(e)}
+            style={{ zIndex: '1' }}
           />
         ) : (
           <>
             <DragHandle {...attributes} {...listeners} />
-            <ListTitle>{title}</ListTitle>
+            <ListTitle onClick={handleEditClicked}>{title}</ListTitle>
           </>
         )}
         {editClicked ? (
