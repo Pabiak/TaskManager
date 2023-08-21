@@ -167,19 +167,20 @@ const Task = ({
           type="textarea"
           value={newTitle}
           onChange={(e) => handleTitleChange(e)}
+          style={{ zIndex: '1' }}
         />
       ) : (
         <div>
           {label && (
-            <TaskLabel priority={label} />
+            <TaskLabel priority={label} onLabelClick={toggleAddLabelModal} />
           ) }
           <div>
             <DragHandle {...attributes} {...listeners} />
-            <TaskTitle>{title}</TaskTitle>
+            <TaskTitle onClick={handleEditClicked}>{title}</TaskTitle>
           </div>
           {deadline && (
             <div>
-              <DeadlineText>{deadline}</DeadlineText>
+              <DeadlineText onClick={toggleDeadlineModal}>{deadline}</DeadlineText>
             </div>
           )}
         </div>
