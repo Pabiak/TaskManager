@@ -54,8 +54,11 @@ const Theme = ({ children }) => (
 );
 
 Theme.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
-  children: PropTypes.any.isRequired,
+  children: PropTypes.node,
+};
+
+Theme.defaultProps = {
+  children: null,
 };
 
 export default Theme;

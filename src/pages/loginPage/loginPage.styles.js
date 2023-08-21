@@ -101,6 +101,7 @@ export const AnonymousButton = styled.button`
     svg {
         font-size: ${({ theme }) => theme.fontSizes.xl};
     }
+
     &:hover {
         background-color: ${({ theme }) => theme.colors.hoverGray};
     };

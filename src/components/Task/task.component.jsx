@@ -10,7 +10,7 @@ import { CSS } from '@dnd-kit/utilities';
 import { UserAuth } from '../../context/authContext';
 import { database } from '../../firebase';
 import PopupMenu from '../PopupMenu/popupMenu.component';
-import TaskLabel from '../TaskLabel/TaskLabel.component';
+import TaskLabel from '../TaskLabel/taskLabel.component';
 import AddLabelModal from '../AddLabelModal/addLabelModal.component';
 import AddDeadlineModal from '../AddDeadlineModal/addDeadlineModal.component';
 
