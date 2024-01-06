@@ -27,7 +27,7 @@
         "edit": "Edytuj",
         "delete": "Usuń",
         "addLabel": "Dodaj etykietę",
-        "addDeadline": "Dodaj deadline"
+        "addDeadline": "Dodaj termin wykonania"
     },
     "confirmDeleteModal": {
         "title": "Czy na pewno chcesz usunąć listę:",
@@ -36,7 +36,7 @@
         "cancel": "Anuluj"
     },
     "addDeadlineModal": {
-        "message": "Dodaj deadline do zadania"
+        "message": "Dodaj termin wykonania do zadania"
     },
     "taskLabel": {
         "message": "Dodaj etykietę do zadania",
